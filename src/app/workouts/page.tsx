@@ -143,9 +143,18 @@ export default function WorkoutsPage() {
                 {exercises.map((exercise, index) => (
                     <Card
                         key={index}
-                        className={`transition-all duration-300 border-l-4 ${completedExercises.has(index)
-                            ? "border-l-emerald-500 bg-slate-50/50 opacity-70"
-                            : "border-l-indigo-500 shadow-md"
+                        role="checkbox"
+                        aria-checked={completedExercises.has(index)}
+                        tabIndex={0}
+                        onKeyDown={(e) => {
+                            if (e.key === "Enter" || e.key === " ") {
+                                e.preventDefault();
+                                toggleExercise(index);
+                            }
+                        }}
+                        className={`transition-all duration-300 ${completedExercises.has(index)
+                            ? "bg-emerald-50/50 opacity-70"
+                            : "bg-white shadow-md hover:shadow-lg"
                             }`}
                         onClick={() => toggleExercise(index)}
                     >
@@ -165,7 +174,7 @@ export default function WorkoutsPage() {
 
                             <div className={`mt-1 h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${completedExercises.has(index)
                                 ? "bg-emerald-500 border-emerald-500"
-                                : "border-slate-300"
+                                : "border-slate-300 bg-transparent"
                                 }`}>
                                 {completedExercises.has(index) && <CheckCircle2 className="w-4 h-4 text-white" />}
                             </div>

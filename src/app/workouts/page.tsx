@@ -98,7 +98,7 @@ export default function WorkoutsPage() {
                     <h1 className="text-3xl font-black text-slate-900 mb-4 px-2">Select Workout</h1>
 
                     {/* Grid Layout for Workout Cards */}
-                    <div className="grid grid-cols-3 gap-3 px-2 pb-6">
+                    <div className="grid grid-cols-2 gap-3 px-2 pb-6">
                         {Object.entries(WORKOUT_PLANS).map(([type, planExercises]) => {
                             const isSelected = workoutType === type;
                             return (

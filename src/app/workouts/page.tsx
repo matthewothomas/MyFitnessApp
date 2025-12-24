@@ -20,7 +20,6 @@ export default function WorkoutsPage() {
     const [loading, setLoading] = useState(true);
     const [completedExercises, setCompletedExercises] = useState<Set<number>>(new Set());
     const router = useRouter();
-    const router = useRouter();
     const [editingExerciseIndex, setEditingExerciseIndex] = useState<number | null>(null);
 
     useEffect(() => {
@@ -214,7 +213,7 @@ export default function WorkoutsPage() {
                             </div>
 
                             <div className="flex-1 space-y-4">
-                                {isEditing ? (
+                                {editingExerciseIndex === index ? (
                                     <Input
                                         value={exercise.name}
                                         onChange={(e) => handleUpdateExercise(index, 'name', e.target.value)}
@@ -230,7 +229,7 @@ export default function WorkoutsPage() {
                                 <div className="flex flex-wrap gap-4 items-center">
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 pl-1">Sets</label>
-                                        {isEditing ? (
+                                        {editingExerciseIndex === index ? (
                                             <Input
                                                 type="number"
                                                 value={exercise.sets}
@@ -246,7 +245,7 @@ export default function WorkoutsPage() {
 
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 pl-1">Reps</label>
-                                        {isEditing ? (
+                                        {editingExerciseIndex === index ? (
                                             <Input
                                                 type="number"
                                                 value={exercise.reps}
@@ -262,7 +261,7 @@ export default function WorkoutsPage() {
 
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 pl-1">Weight</label>
-                                        {isEditing ? (
+                                        {editingExerciseIndex === index ? (
                                             <div className="relative">
                                                 <Input
                                                     type="number"
@@ -281,9 +280,9 @@ export default function WorkoutsPage() {
                                     </div>
                                 </div>
 
-                                {(exercise.note || isEditing) && (
+                                {(exercise.note || editingExerciseIndex === index) && (
                                     <div className="mt-2 text-xs">
-                                        {isEditing ? (
+                                        {editingExerciseIndex === index ? (
                                             <Input
                                                 value={exercise.note || ""}
                                                 placeholder="Add a note..."
@@ -304,7 +303,7 @@ export default function WorkoutsPage() {
                     </Card>
                 ))}
 
-                {isEditing && (
+                {editingExerciseIndex !== null && (
                     <Button
                         variant="outline"
                         className="w-full border-dashed border-2 h-16 text-slate-400 hover:text-indigo-600 hover:border-indigo-600 hover:bg-indigo-50"

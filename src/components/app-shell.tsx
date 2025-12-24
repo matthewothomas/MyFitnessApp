@@ -19,7 +19,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 {children}
             </main>
 
-            <div className="fixed bottom-6 left-6 right-6 md:w-[400px] md:left-1/2 md:-translate-x-1/2 rounded-full border border-slate-200 bg-white/90 backdrop-blur-xl z-50">
+            <div className="fixed bottom-6 left-6 right-6 md:w-[400px] md:left-1/2 md:-translate-x-1/2 rounded-full border border-white/20 bg-white/70 backdrop-blur-xl shadow-xl z-50">
                 <div className="flex justify-around items-center h-20 px-2">
                     <button
                         onClick={() => router.push("/")}

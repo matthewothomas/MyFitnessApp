@@ -98,12 +98,8 @@ export default function WorkoutDashboard() {
                     </div>
 
                     <div className="space-y-1 mb-8">
-                        <h2 className="text-sm font-medium text-indigo-100">Today's Focus</h2>
-                        {loading ? (
-                            <Skeleton className="h-10 w-48 bg-white/20" />
-                        ) : (
-                            <h3 className="text-4xl font-black tracking-tight text-white">{nextWorkout}</h3>
-                        )}
+                        <h2 className="text-sm font-medium text-indigo-100">Let's Get Moving</h2>
+                        <h3 className="text-4xl font-black tracking-tight text-white">Ready to Train?</h3>
                     </div>
 
                     <Button

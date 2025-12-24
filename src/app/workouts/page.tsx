@@ -42,7 +42,43 @@ export default function WorkoutsPage() {
         loadRoutine();
     }, []);
 
-    // ... existing handlers ...
+    const toggleExercise = (index: number) => {
+        if (editingExerciseIndex === index) return;
+        const newCompleted = new Set(completedExercises);
+        if (newCompleted.has(index)) {
+            newCompleted.delete(index);
+        } else {
+            newCompleted.add(index);
+        }
+        setCompletedExercises(newCompleted);
+    };
+
+    const handleUpdateExercise = (index: number, field: keyof Exercise, value: any) => {
+        const newExercises = [...exercises];
+        newExercises[index] = { ...newExercises[index], [field]: value };
+        setExercises(newExercises);
+    };
+
+    const handleDeleteExercise = (index: number) => {
+        const newExercises = exercises.filter((_, i) => i !== index);
+        setExercises(newExercises);
+    };
+
+    const handleAddExercise = () => {
+        setExercises([...exercises, { name: "New Exercise", sets: 3, reps: 10 }]);
+        setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
+    };
+
+    const handleWorkoutChange = (value: string) => {
+        const type = value as WorkoutType;
+        setWorkoutType(type);
+        setExercises(WORKOUT_PLANS[type]);
+        setCompletedExercises(new Set());
+    };
+
+    const progress = exercises.length > 0
+        ? Math.round((completedExercises.size / exercises.length) * 100)
+        : 0;
 
     const theme = WORKOUT_THEMES[workoutType] || WORKOUT_THEMES["Push 1"];
 

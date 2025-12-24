@@ -13,6 +13,7 @@ import { useRouter } from "next/navigation";
 
 export default function WorkoutDashboard({ userName = "User" }: { userName?: string }) {
     const [nextWorkout, setNextWorkout] = useState<WorkoutType>("Push 1");
+    const [currentUserName, setCurrentUserName] = useState(userName);
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
@@ -40,7 +41,7 @@ export default function WorkoutDashboard({ userName = "User" }: { userName?: str
                 if (user) {
                     // Try to get name from metadata first, then email
                     const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || "User";
-                    setUserName(name);
+                    setCurrentUserName(name);
 
                     const last = await fetchLastWorkoutLog(user.id);
                     const next = getNextWorkout(last);
@@ -55,7 +56,7 @@ export default function WorkoutDashboard({ userName = "User" }: { userName?: str
         loadWorkout();
     }, []);
 
-    const userInitials = userName.slice(0, 2).toUpperCase();
+    const userInitials = currentUserName.slice(0, 2).toUpperCase();
 
     return (
         <div className="space-y-6 pt-4">
@@ -78,7 +79,7 @@ export default function WorkoutDashboard({ userName = "User" }: { userName?: str
                     }}
                 >
                     <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
-                        <AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${userName}`} />
+                        <AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${currentUserName}`} />
                         <AvatarFallback className="bg-indigo-100 text-indigo-700 font-bold">{userInitials}</AvatarFallback>
                     </Avatar>
                 </div>

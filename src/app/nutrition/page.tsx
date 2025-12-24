@@ -77,8 +77,10 @@ export default function NutritionPage() {
                     </div>
                 </div>
                 <div className="h-2 bg-black/10 dark:bg-white/10 rounded-full overflow-hidden">
-                    <div className="h-full bg-orange-500 w-1/3 rounded-full"></div>
-                    {/* Logic for width can be added based on goal */}
+                    <div
+                        className="h-full bg-orange-500 rounded-full transition-all duration-500 ease-out"
+                        style={{ width: `${Math.min(100, (totalCalories / 2500) * 100)}%` }}
+                    ></div>
                 </div>
             </div>
 

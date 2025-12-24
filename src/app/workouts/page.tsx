@@ -116,25 +116,28 @@ export default function WorkoutsPage() {
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 mb-4 px-2">Select Workout</h1>
 
-                    {/* Horizontal Scrollable List */}
-                    <div className="flex gap-2 overflow-x-auto pb-4 px-2 no-scrollbar">
-                        {Object.keys(WORKOUT_PLANS).map((type) => (
-                            <button
+                    {/* Horizontal Scrollable Cards */}
+                    <div className="flex gap-3 overflow-x-auto pb-6 px-2 no-scrollbar snap-x">
+                        {Object.entries(WORKOUT_PLANS).map(([type, planExercises]) => (
+                            <div
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
-                                className={`flex-shrink-0 px-6 py-3 rounded-full text-base font-bold transition-all duration-200 ${workoutType === type
-                                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
-                                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                                className={`flex-shrink-0 w-32 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer snap-start ${workoutType === type
+                                        ? "border-indigo-600 bg-indigo-50 shadow-md scale-105"
+                                        : "border-slate-200 bg-white hover:border-indigo-200"
                                     }`}
                             >
-                                {type}
-                            </button>
+                                <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
+                                    }`}>
+                                    <Dumbbell className="w-4 h-4" />
+                                </div>
+                                <h3 className={`font-bold text-sm mb-1 ${workoutType === type ? "text-indigo-900" : "text-slate-700"
+                                    }`}>{type}</h3>
+                                <p className={`text-xs ${workoutType === type ? "text-indigo-600" : "text-slate-400"
+                                    }`}>{planExercises.length} Exercises</p>
+                            </div>
                         ))}
                     </div>
-
-                    <p className="text-slate-500 text-sm px-2 font-medium">
-                        Target: {exercises.length} Exercises
-                    </p>
                 </div>
             </div>
 

@@ -36,11 +36,7 @@ export default function ButtonShowcasePage() {
                     </div>
                     <div className="flex flex-col items-center gap-2">
                         <Button size="lg">Large (lg)</Button>
-                        <span className="text-xs text-slate-400">h-12 text-base</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-2">
-                        <Button size="xl">Extra Large (xl)</Button>
-                        <span className="text-xs text-slate-400">h-14 text-lg</span>
+                        <span className="text-xs text-slate-400">h-10 text-base</span>
                     </div>
                 </div>
             </section>
@@ -58,7 +54,7 @@ export default function ButtonShowcasePage() {
                     <Button variant="destructive" size="sm">
                         <MdDelete className="w-4 h-4 mr-1" /> Delete
                     </Button>
-                    <Button variant="secondary" size="xl">
+                    <Button variant="secondary" size="lg">
                         <MdCheck className="w-6 h-6 mr-2" /> Complete Workout
                     </Button>
                 </div>
@@ -69,16 +65,8 @@ export default function ButtonShowcasePage() {
                 <h2 className="text-xl font-bold text-slate-800 border-b pb-2">Icon Only</h2>
                 <div className="flex flex-wrap items-end gap-4">
                     <div className="flex flex-col items-center gap-2">
-                        <Button size="icon-sm" variant="outline"><MdAdd /></Button>
-                        <span className="text-xs text-slate-400">icon-sm</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-2">
                         <Button size="icon" variant="default"><MdAdd /></Button>
                         <span className="text-xs text-slate-400">icon (default)</span>
-                    </div>
-                    <div className="flex flex-col items-center gap-2">
-                        <Button size="icon-lg" variant="secondary"><MdAdd /></Button>
-                        <span className="text-xs text-slate-400">icon-lg</span>
                     </div>
                 </div>
             </section>

@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MdArrowBack, MdCheckCircle, MdFitnessCenter, MdTimer, MdDelete, MdAddCircle, MdEdit, MdClose } from "react-icons/md";
+import { IconPickerDialog, ICON_MAP } from "@/components/icon-picker-dialog";
 import { useRouter } from "next/navigation";
 
 
@@ -22,6 +23,11 @@ export default function WorkoutsPage() {
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingExerciseIndex, setEditingExerciseIndex] = useState<number | null>(null);
+
+    // Icon Customization State
+    const [pickerOpen, setPickerOpen] = useState(false);
+    const [targetCustomizationIndex, setTargetCustomizationIndex] = useState<number | null>(null);
+    const [customization, setCustomization] = useState<Record<string, { iconKey: string; iconColor: string; bgColor: string }>>({});
 
     // Track completed exercises
     const [completedExercises, setCompletedExercises] = useState<Set<number>>(new Set());
@@ -188,17 +194,45 @@ export default function WorkoutsPage() {
                                 )}
                             </div>
 
-                            <div className="relative w-16 h-16 rounded-md overflow-hidden bg-slate-100 flex-shrink-0">
-                                {exercise.image ? (
-                                    <img src={exercise.image} alt={exercise.name} className="w-full h-full object-cover" />
-                                ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-300">
-                                        <MdFitnessCenter className="w-8 h-8" />
-                                    </div>
-                                )}
+                            <div
+                                className="relative w-16 h-16 rounded-md overflow-hidden flex-shrink-0 cursor-pointer transition-transform hover:scale-105"
+                                style={{
+                                    backgroundColor: customization[`${workoutType}-${index}`]?.bgColor || "#f1f5f9" // slate-100 default
+                                }}
+                                onClick={(e) => {
+                                    if (editingExerciseIndex === index) {
+                                        e.stopPropagation();
+                                        setTargetCustomizationIndex(index);
+                                        setPickerOpen(true);
+                                    }
+                                }}
+                            >
+                                <div className="w-full h-full flex items-center justify-center">
+                                    {(() => {
+                                        const custom = customization[`${workoutType}-${index}`];
+                                        const Icon = custom ? (ICON_MAP[custom.iconKey] || MdFitnessCenter) : null;
+
+                                        if (Icon) {
+                                            return <Icon className="w-8 h-8" style={{ color: custom?.iconColor || "#94a3b8" }} />;
+                                        }
+
+                                        if (exercise.image) {
+                                            return <img src={exercise.image} alt={exercise.name} className="w-full h-full object-cover" />;
+                                        }
+
+                                        return <MdFitnessCenter className="w-8 h-8 text-slate-400" />;
+                                    })()}
+                                </div>
+
                                 {completedExercises.has(index) && (
                                     <div className="absolute inset-0 bg-slate-900/80 flex items-center justify-center">
                                         <MdCheckCircle className="w-8 h-8 text-white" />
+                                    </div>
+                                )}
+
+                                {editingExerciseIndex === index && (
+                                    <div className="absolute bottom-0 inset-x-0 h-4 bg-black/40 flex items-center justify-center">
+                                        <MdEdit className="w-3 h-3 text-white" />
                                     </div>
                                 )}
                             </div>
@@ -306,6 +340,20 @@ export default function WorkoutsPage() {
             </div>
 
 
+            {/* Icon Picker Dialog */}
+            <IconPickerDialog
+                open={pickerOpen}
+                onOpenChange={setPickerOpen}
+                initialConfig={targetCustomizationIndex !== null ? customization[`${workoutType}-${targetCustomizationIndex}`] : undefined}
+                onSave={(config) => {
+                    if (targetCustomizationIndex !== null) {
+                        setCustomization({
+                            ...customization,
+                            [`${workoutType}-${targetCustomizationIndex}`]: config
+                        });
+                    }
+                }}
+            />
         </div >
     );
 }

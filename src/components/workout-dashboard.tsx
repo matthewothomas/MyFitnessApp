@@ -94,7 +94,6 @@ export default function WorkoutDashboard() {
                         <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
                             <Calendar className="w-5 h-5 text-white" />
                         </div>
-                        <span className="text-xs font-bold uppercase tracking-widest bg-white/10 px-2 py-1 rounded text-white/80">Suggested</span>
                     </div>
 
                     <div className="space-y-1 mb-8">

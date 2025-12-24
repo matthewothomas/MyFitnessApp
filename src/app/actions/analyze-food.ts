@@ -30,7 +30,7 @@ export async function analyzeFoodAction(formData: FormData) {
         const result = await generateObject({
             model: google('gemini-1.5-flash'),
             schema: FoodAnalysisSchema,
-            prompt: 'Analyze this food image. Estimate the nutritional content for the entire visible portion.',
+
             messages: [
                 {
                     role: 'user' as const,

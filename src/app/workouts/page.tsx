@@ -11,6 +11,15 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, CheckCircle2, Dumbbell, Timer, Trash2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/components/ui/select";
+// ... existing imports
+
 export default function WorkoutsPage() {
     const [workoutType, setWorkoutType] = useState<WorkoutType | null>(null);
     const [exercises, setExercises] = useState<Exercise[]>([]);
@@ -67,6 +76,14 @@ export default function WorkoutsPage() {
         setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
     };
 
+    // Handler to switch workout manually
+    const handleWorkoutChange = (value: string) => {
+        const type = value as WorkoutType;
+        setWorkoutType(type);
+        setExercises(WORKOUT_PLANS[type]);
+        setCompletedExercises(new Set()); // Reset progress when switching
+    };
+
     const progress = exercises.length > 0
         ? Math.round((completedExercises.size / exercises.length) * 100)
         : 0;
@@ -87,8 +104,19 @@ export default function WorkoutsPage() {
                 <Button variant="ghost" size="icon" onClick={() => router.back()}>
                     <ArrowLeft className="w-6 h-6" />
                 </Button>
-                <div>
-                    <h1 className="text-2xl font-bold text-slate-900">{workoutType}</h1>
+                <div className="flex-1">
+                    <Select value={workoutType || ""} onValueChange={handleWorkoutChange}>
+                        <SelectTrigger className="w-full text-2xl font-bold text-slate-900 border-none shadow-none bg-transparent p-0 h-auto focus:ring-0">
+                            <SelectValue placeholder="Select Workout" />
+                        </SelectTrigger>
+                        <SelectContent>
+                            {Object.keys(WORKOUT_PLANS).map((type) => (
+                                <SelectItem key={type} value={type} className="text-lg font-medium">
+                                    {type}
+                                </SelectItem>
+                            ))}
+                        </SelectContent>
+                    </Select>
                     <p className="text-slate-500 text-sm">Target: {exercises.length} Exercises</p>
                 </div>
                 <div className="ml-auto flex items-center gap-2">

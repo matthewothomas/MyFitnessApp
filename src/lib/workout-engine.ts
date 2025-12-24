@@ -1,4 +1,4 @@
-export type WorkoutType = 'Push 1' | 'Pull 1' | 'Legs 1' | 'Push 2' | 'Pull 2' | 'Legs 2';
+export type WorkoutType = 'Push 1' | 'Pull 1' | 'Push 2' | 'Pull 2' | 'Legs';
 
 export interface Exercise {
     name: string;
@@ -65,19 +65,7 @@ export const WORKOUT_PLANS: Record<WorkoutType, Exercise[]> = {
         { name: "Pulley", sets: 3, reps: 8, weight: 45 },
         { name: "Shrugs", sets: 3, reps: 12, weight: 24 }
     ],
-    'Legs 1': [
-        { name: "Abductor", sets: 3, reps: 8, weight: 50 },
-        { name: "Calf smith machine", sets: 3, reps: 8, weight: 25 },
-        { name: "Calf Leg Press", sets: 3, reps: 8, weight: 50 },
-        { name: "Squat smith", sets: 3, reps: 8, weight: 45 },
-        { name: "Leg press (single)", sets: 3, reps: 8, weight: 80 },
-        { name: "Double leg extension", sets: 3, reps: 8, weight: 45 },
-        { name: "Leg curl", sets: 3, reps: 8, weight: 47.5 },
-        { name: "Lunges", sets: 2, reps: 10, weight: 10 },
-        { name: "Hip thrusts", sets: 3, reps: 8, weight: 15 }
-    ],
-    'Legs 2': [
-        // Duplicate Legs 1 for now
+    'Legs': [
         { name: "Abductor", sets: 3, reps: 8, weight: 50 },
         { name: "Calf smith machine", sets: 3, reps: 8, weight: 25 },
         { name: "Calf Leg Press", sets: 3, reps: 8, weight: 50 },
@@ -93,10 +81,10 @@ export const WORKOUT_PLANS: Record<WorkoutType, Exercise[]> = {
 const ROTATION: WorkoutType[] = [
     'Push 1',
     'Pull 1',
-    'Legs 1',
+    'Legs',
     'Push 2',
     'Pull 2',
-    'Legs 2'
+    'Legs'
 ];
 
 /**

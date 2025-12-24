@@ -14,13 +14,7 @@ import { useRouter } from "next/navigation";
 
 // ... existing imports
 
-const WORKOUT_THEMES: Record<string, { main: string; light: string; border: string; text: string; ring: string }> = {
-    "Push 1": { main: "bg-indigo-100", light: "bg-indigo-50", border: "border-indigo-600", text: "text-indigo-600", ring: "ring-indigo-600" },
-    "Push 2": { main: "bg-indigo-100", light: "bg-indigo-50", border: "border-indigo-600", text: "text-indigo-600", ring: "ring-indigo-600" },
-    "Pull 1": { main: "bg-cyan-100", light: "bg-cyan-50", border: "border-cyan-600", text: "text-cyan-600", ring: "ring-cyan-600" },
-    "Pull 2": { main: "bg-cyan-100", light: "bg-cyan-50", border: "border-cyan-600", text: "text-cyan-600", ring: "ring-cyan-600" },
-    "Legs": { main: "bg-emerald-100", light: "bg-emerald-50", border: "border-emerald-600", text: "text-emerald-600", ring: "ring-emerald-600" },
-};
+const WORKOUT_THEMES = {}; // Removed
 
 export default function WorkoutsPage() {
     const router = useRouter();
@@ -80,8 +74,6 @@ export default function WorkoutsPage() {
         ? Math.round((completedExercises.size / exercises.length) * 100)
         : 0;
 
-    const theme = WORKOUT_THEMES[workoutType] || WORKOUT_THEMES["Push 1"];
-
     if (loading) {
         return (
             <div className="container mx-auto p-4 space-y-4">
@@ -100,8 +92,6 @@ export default function WorkoutsPage() {
                     <Button variant="ghost" size="icon" onClick={() => router.back()}>
                         <MdArrowBack className="w-6 h-6" />
                     </Button>
-
-
                 </div>
 
                 <div>
@@ -111,22 +101,21 @@ export default function WorkoutsPage() {
                     <div className="grid grid-cols-3 gap-3 px-2 pb-6">
                         {Object.entries(WORKOUT_PLANS).map(([type, planExercises]) => {
                             const isSelected = workoutType === type;
-                            const t = WORKOUT_THEMES[type] || WORKOUT_THEMES["Push 1"];
                             return (
                                 <div
                                     key={type}
                                     onClick={() => handleWorkoutChange(type)}
                                     className={`flex flex-col items-center justify-center p-3 rounded-2xl border-2 transition-all duration-200 cursor-pointer ${isSelected
-                                        ? `${t.border} ${t.light} scale-[1.02]`
+                                        ? "border-slate-900 bg-slate-900 scale-[1.02]"
                                         : "border-slate-200 bg-white hover:border-slate-300"
                                         }`}
                                 >
-                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${isSelected ? `${t.main} text-white` : "bg-slate-100 text-slate-400"
+                                    <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-2 ${isSelected ? "bg-white/20 text-white" : "bg-slate-100 text-slate-400"
                                         }`}>
                                         <MdFitnessCenter className="w-5 h-5" />
                                     </div>
-                                    <h3 className={`font-bold text-sm text-center ${isSelected ? "text-slate-900" : "text-slate-600"}`}>{type}</h3>
-                                    <p className={`text-[10px] uppercase font-bold ${isSelected ? t.text : "text-slate-400"}`}>{planExercises.length} Ex</p>
+                                    <h3 className={`font-bold text-sm text-center ${isSelected ? "text-white" : "text-slate-600"}`}>{type}</h3>
+                                    <p className={`text-[10px] uppercase font-bold ${isSelected ? "text-slate-400" : "text-slate-400"}`}>{planExercises.length} Ex</p>
                                 </div>
                             );
                         })}
@@ -137,7 +126,7 @@ export default function WorkoutsPage() {
             {/* Progress Bar */}
             <div className="w-full bg-slate-100 h-2 rounded-full mb-8 overflow-hidden">
                 <div
-                    className="bg-indigo-600 h-full transition-all duration-500 ease-out"
+                    className="bg-slate-900 h-full transition-all duration-500 ease-out"
                     style={{ width: `${progress}%` }}
                 />
             </div>
@@ -156,8 +145,8 @@ export default function WorkoutsPage() {
                             }
                         }}
                         className={`transition-all duration-300 ${completedExercises.has(index)
-                            ? "bg-emerald-50/50 opacity-70"
-                            : `bg-white border-l-4 ${theme.border} shadow-sm` // Consistent keyline
+                            ? "bg-slate-50 opacity-60"
+                            : "bg-white border-l-4 border-slate-900 shadow-sm"
                             }`}
                         onClick={() => toggleExercise(index)}
                     >
@@ -192,7 +181,7 @@ export default function WorkoutsPage() {
                                             e.stopPropagation();
                                             setEditingExerciseIndex(index);
                                         }}
-                                        className="p-2 text-slate-300 hover:text-indigo-600 transition-colors"
+                                        className="p-2 text-slate-300 hover:text-slate-900 transition-colors"
                                     >
                                         <MdEdit className="w-5 h-5" />
                                     </button>
@@ -203,12 +192,12 @@ export default function WorkoutsPage() {
                                 {exercise.image ? (
                                     <img src={exercise.image} alt={exercise.name} className="w-full h-full object-cover" />
                                 ) : (
-                                    <div className="w-full h-full flex items-center justify-center bg-indigo-50 text-indigo-200">
+                                    <div className="w-full h-full flex items-center justify-center bg-slate-100 text-slate-300">
                                         <MdFitnessCenter className="w-8 h-8" />
                                     </div>
                                 )}
                                 {completedExercises.has(index) && (
-                                    <div className="absolute inset-0 bg-emerald-500/80 flex items-center justify-center">
+                                    <div className="absolute inset-0 bg-slate-900/80 flex items-center justify-center">
                                         <MdCheckCircle className="w-8 h-8 text-white" />
                                     </div>
                                 )}
@@ -219,7 +208,7 @@ export default function WorkoutsPage() {
                                     <Input
                                         value={exercise.name}
                                         onChange={(e) => handleUpdateExercise(index, 'name', e.target.value)}
-                                        className="font-bold text-lg h-10 border-slate-200 focus:border-indigo-500 bg-white pr-24 text-slate-900"
+                                        className="font-bold text-lg h-10 border-slate-200 focus:border-slate-500 bg-white pr-24 text-slate-900"
                                         placeholder="Exercise Name"
                                     />
                                 ) : (
@@ -236,7 +225,7 @@ export default function WorkoutsPage() {
                                                 type="number"
                                                 value={exercise.sets}
                                                 onChange={(e) => handleUpdateExercise(index, 'sets', parseInt(e.target.value))}
-                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white text-slate-900"
+                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-slate-500 bg-white text-slate-900"
                                             />
                                         ) : (
                                             <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-600">
@@ -252,7 +241,7 @@ export default function WorkoutsPage() {
                                                 type="number"
                                                 value={exercise.reps}
                                                 onChange={(e) => handleUpdateExercise(index, 'reps', parseInt(e.target.value))}
-                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white text-slate-900"
+                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-slate-500 bg-white text-slate-900"
                                             />
                                         ) : (
                                             <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-600">
@@ -270,12 +259,12 @@ export default function WorkoutsPage() {
                                                     value={exercise.weight || ""}
                                                     placeholder="-"
                                                     onChange={(e) => handleUpdateExercise(index, 'weight', parseFloat(e.target.value))}
-                                                    className="w-20 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white text-slate-900"
+                                                    className="w-20 h-10 text-center text-lg font-bold border-slate-200 focus:border-slate-500 bg-white text-slate-900"
                                                 />
                                                 <span className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-medium">kg</span>
                                             </div>
                                         ) : (
-                                            <div className={`px-4 py-2 rounded-lg text-sm font-bold ${exercise.weight ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-400"}`}>
+                                            <div className={`px-4 py-2 rounded-lg text-sm font-bold ${exercise.weight ? "bg-slate-100 text-slate-900" : "bg-slate-100 text-slate-400"}`}>
                                                 <span className="text-lg">{exercise.weight || "--"}</span> kg
                                             </div>
                                         )}
@@ -289,11 +278,11 @@ export default function WorkoutsPage() {
                                                 value={exercise.note || ""}
                                                 placeholder="Add a note..."
                                                 onChange={(e) => handleUpdateExercise(index, 'note', e.target.value)}
-                                                className="h-8 text-xs bg-amber-50/50 border-amber-200 text-amber-900 placeholder:text-amber-400"
+                                                className="h-8 text-xs bg-slate-50 border-slate-200 text-slate-900 placeholder:text-slate-400"
                                             />
                                         ) : (
                                             exercise.note && (
-                                                <p className="text-amber-600 bg-amber-50 p-2 rounded border border-amber-100 inline-block">
+                                                <p className="text-slate-600 bg-slate-50 p-2 rounded border border-slate-200 inline-block">
                                                     Note: {exercise.note}
                                                 </p>
                                             )
@@ -308,7 +297,7 @@ export default function WorkoutsPage() {
                 {editingExerciseIndex !== null && (
                     <Button
                         variant="outline"
-                        className="w-full border-dashed border-2 h-16 text-slate-400 hover:text-indigo-600 hover:border-indigo-600 hover:bg-indigo-50"
+                        className="w-full border-dashed border-2 h-16 text-slate-400 hover:text-slate-900 hover:border-slate-900 hover:bg-slate-50"
                         onClick={handleAddExercise}
                     >
                         <MdAddCircle className="w-5 h-5 mr-1" /> Add Exercise

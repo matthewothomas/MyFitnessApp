@@ -5,9 +5,10 @@ import { getNextWorkout, fetchLastWorkoutLog, WorkoutType, WORKOUT_PLANS, Exerci
 import { createClient } from "@/lib/supabase/client";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, CheckCircle2, Dumbbell, Timer } from "lucide-react";
+import { ArrowLeft, CheckCircle2, Dumbbell, Timer, Trash2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function WorkoutsPage() {
@@ -38,6 +39,7 @@ export default function WorkoutsPage() {
     }, []);
 
     const toggleExercise = (index: number) => {
+        if (isEditing) return; // Disable marking as complete while editing
         const newCompleted = new Set(completedExercises);
         if (newCompleted.has(index)) {
             newCompleted.delete(index);
@@ -45,6 +47,23 @@ export default function WorkoutsPage() {
             newCompleted.add(index);
         }
         setCompletedExercises(newCompleted);
+    };
+
+    const handleUpdateExercise = (index: number, field: keyof Exercise, value: any) => {
+        const newExercises = [...exercises];
+        newExercises[index] = { ...newExercises[index], [field]: value };
+        setExercises(newExercises);
+    };
+
+    const handleDeleteExercise = (index: number) => {
+        const newExercises = exercises.filter((_, i) => i !== index);
+        setExercises(newExercises);
+    };
+
+    const handleAddExercise = () => {
+        setExercises([...exercises, { name: "New Exercise", sets: 3, reps: 10 }]);
+        // Scroll to bottom roughly (optional)
+        setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
     };
 
     const progress = exercises.length > 0
@@ -71,9 +90,15 @@ export default function WorkoutsPage() {
                     <h1 className="text-2xl font-bold text-slate-900">{workoutType}</h1>
                     <p className="text-slate-500 text-sm">Target: {exercises.length} Exercises</p>
                 </div>
-                <div className="ml-auto flex items-center gap-2 bg-indigo-50 px-3 py-1 rounded-full">
-                    <Timer className="w-4 h-4 text-indigo-600" />
-                    <span className="text-indigo-700 font-bold text-sm">00:00</span>
+                <div className="ml-auto flex items-center gap-2">
+                    <Button
+                        variant={isEditing ? "default" : "outline"}
+                        size="sm"
+                        onClick={() => setIsEditing(!isEditing)}
+                        className={isEditing ? "bg-indigo-600 font-bold" : "text-slate-500 font-medium"}
+                    >
+                        {isEditing ? "Done" : "Edit"}
+                    </Button>
                 </div>
             </div>
 
@@ -90,58 +115,137 @@ export default function WorkoutsPage() {
                     <Card
                         key={index}
                         className={`transition-all duration-300 border-l-4 ${completedExercises.has(index)
-                                ? "border-l-emerald-500 bg-slate-50/50 opacity-70"
-                                : "border-l-indigo-500 shadow-md"
+                            ? "border-l-emerald-500 bg-slate-50/50 opacity-70"
+                            : "border-l-indigo-500 shadow-md"
                             }`}
                         onClick={() => toggleExercise(index)}
                     >
-                        <CardContent className="p-4 flex items-start gap-4 cursor-pointer">
+                        <CardContent className="p-4 flex items-start gap-4 cursor-pointer relative">
+                            {/* Delete Button in Edit Mode */}
+                            {isEditing && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        handleDeleteExercise(index);
+                                    }}
+                                    className="absolute top-2 right-2 p-2 text-slate-400 hover:text-red-500"
+                                >
+                                    <Trash2 className="w-4 h-4" />
+                                </button>
+                            )}
+
                             <div className={`mt-1 h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${completedExercises.has(index)
-                                    ? "bg-emerald-500 border-emerald-500"
-                                    : "border-slate-300"
+                                ? "bg-emerald-500 border-emerald-500"
+                                : "border-slate-300"
                                 }`}>
                                 {completedExercises.has(index) && <CheckCircle2 className="w-4 h-4 text-white" />}
                             </div>
 
-                            <div className="flex-1">
-                                <h3 className={`font-bold text-lg ${completedExercises.has(index) ? "text-slate-400 line-through" : "text-slate-900"}`}>
-                                    {exercise.name}
-                                </h3>
+                            <div className="flex-1 space-y-3">
+                                {isEditing ? (
+                                    <Input
+                                        value={exercise.name}
+                                        onChange={(e) => handleUpdateExercise(index, 'name', e.target.value)}
+                                        className="font-bold text-lg h-8"
+                                    />
+                                ) : (
+                                    <h3 className={`font-bold text-lg ${completedExercises.has(index) ? "text-slate-400 line-through" : "text-slate-900"}`}>
+                                        {exercise.name}
+                                    </h3>
+                                )}
 
-                                <div className="mt-2 flex flex-wrap gap-2">
-                                    <div className="bg-slate-100 px-2 py-1 rounded text-xs font-medium text-slate-600">
-                                        {exercise.sets} sets
+                                <div className="flex flex-wrap gap-2 items-center">
+                                    <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-medium text-slate-600">
+                                        {isEditing ? (
+                                            <Input
+                                                type="number"
+                                                value={exercise.sets}
+                                                onChange={(e) => handleUpdateExercise(index, 'sets', parseInt(e.target.value))}
+                                                className="w-12 h-6 text-center p-0 bg-transparent border-none"
+                                            />
+                                        ) : (
+                                            <span>{exercise.sets}</span>
+                                        )}
+                                        <span>sets</span>
                                     </div>
-                                    <div className="bg-slate-100 px-2 py-1 rounded text-xs font-medium text-slate-600">
-                                        {exercise.reps} reps
+
+                                    <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-medium text-slate-600">
+                                        {isEditing ? (
+                                            <Input
+                                                type="number"
+                                                value={exercise.reps}
+                                                onChange={(e) => handleUpdateExercise(index, 'reps', parseInt(e.target.value))}
+                                                className="w-12 h-6 text-center p-0 bg-transparent border-none"
+                                            />
+                                        ) : (
+                                            <span>{exercise.reps}</span>
+                                        )}
+                                        <span>reps</span>
                                     </div>
-                                    {exercise.weight && (
-                                        <div className="bg-indigo-100 px-2 py-1 rounded text-xs font-bold text-indigo-700">
-                                            {exercise.weight}kg
-                                        </div>
-                                    )}
+
+                                    <div className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-bold ${exercise.weight ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-400"}`}>
+                                        {isEditing ? (
+                                            <Input
+                                                type="number"
+                                                value={exercise.weight || ""}
+                                                placeholder="0"
+                                                onChange={(e) => handleUpdateExercise(index, 'weight', parseFloat(e.target.value))}
+                                                className="w-12 h-6 text-center p-0 bg-transparent border-none focus:ring-0"
+                                            />
+                                        ) : (
+                                            <span>{exercise.weight || "--"}</span>
+                                        )}
+                                        <span>kg</span>
+                                    </div>
                                 </div>
-                                {exercise.note && (
-                                    <p className="mt-2 text-xs text-amber-600 bg-amber-50 p-2 rounded border border-amber-100 inline-block">
-                                        Note: {exercise.note}
-                                    </p>
+
+                                {(exercise.note || isEditing) && (
+                                    <div className="mt-2 text-xs">
+                                        {isEditing ? (
+                                            <Input
+                                                value={exercise.note || ""}
+                                                placeholder="Add a note..."
+                                                onChange={(e) => handleUpdateExercise(index, 'note', e.target.value)}
+                                                className="h-7 text-xs bg-amber-50/50 border-amber-200"
+                                            />
+                                        ) : (
+                                            exercise.note && (
+                                                <p className="text-amber-600 bg-amber-50 p-2 rounded border border-amber-100 inline-block">
+                                                    Note: {exercise.note}
+                                                </p>
+                                            )
+                                        )}
+                                    </div>
                                 )}
                             </div>
                         </CardContent>
                     </Card>
                 ))}
+
+                {isEditing && (
+                    <Button
+                        variant="outline"
+                        className="w-full border-dashed border-2 h-16 text-slate-400 hover:text-indigo-600 hover:border-indigo-600 hover:bg-indigo-50"
+                        onClick={handleAddExercise}
+                    >
+                        <Plus className="w-5 h-5 mr-2" />
+                        Add Exercise
+                    </Button>
+                )}
             </div>
 
             <div className="fixed bottom-24 left-0 right-0 px-4">
                 <div className="max-w-lg mx-auto">
                     <Button
                         size="lg"
-                        className="w-full text-lg font-bold shadow-xl shadow-indigo-200 bg-indigo-600 hover:bg-indigo-700 h-14 rounded-2xl"
+                        disabled={isEditing}
+                        className="w-full text-lg font-bold shadow-xl shadow-indigo-200 bg-indigo-600 hover:bg-indigo-700 h-14 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
                     >
-                        Complete Workout
+                        {isEditing ? "Finish Editing to Complete" : "Complete Workout"}
                     </Button>
                 </div>
             </div>
         </div>
     );
 }
+```

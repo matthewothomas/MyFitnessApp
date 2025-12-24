@@ -217,7 +217,7 @@ export default function WorkoutsPage() {
                                     <Input
                                         value={exercise.name}
                                         onChange={(e) => handleUpdateExercise(index, 'name', e.target.value)}
-                                        className="font-bold text-lg h-10 border-slate-200 focus:border-indigo-500 bg-white pr-24"
+                                        className="font-bold text-lg h-10 border-slate-200 focus:border-indigo-500 bg-white pr-24 text-slate-900"
                                         placeholder="Exercise Name"
                                     />
                                 ) : (
@@ -234,7 +234,7 @@ export default function WorkoutsPage() {
                                                 type="number"
                                                 value={exercise.sets}
                                                 onChange={(e) => handleUpdateExercise(index, 'sets', parseInt(e.target.value))}
-                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white"
+                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white text-slate-900"
                                             />
                                         ) : (
                                             <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-600">
@@ -250,7 +250,7 @@ export default function WorkoutsPage() {
                                                 type="number"
                                                 value={exercise.reps}
                                                 onChange={(e) => handleUpdateExercise(index, 'reps', parseInt(e.target.value))}
-                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white"
+                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white text-slate-900"
                                             />
                                         ) : (
                                             <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-600">
@@ -268,7 +268,7 @@ export default function WorkoutsPage() {
                                                     value={exercise.weight || ""}
                                                     placeholder="-"
                                                     onChange={(e) => handleUpdateExercise(index, 'weight', parseFloat(e.target.value))}
-                                                    className="w-20 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white"
+                                                    className="w-20 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white text-slate-900"
                                                 />
                                                 <span className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-medium">kg</span>
                                             </div>
@@ -287,7 +287,7 @@ export default function WorkoutsPage() {
                                                 value={exercise.note || ""}
                                                 placeholder="Add a note..."
                                                 onChange={(e) => handleUpdateExercise(index, 'note', e.target.value)}
-                                                className="h-8 text-xs bg-amber-50/50 border-amber-200"
+                                                className="h-8 text-xs bg-amber-50/50 border-amber-200 text-amber-900 placeholder:text-amber-400"
                                             />
                                         ) : (
                                             exercise.note && (

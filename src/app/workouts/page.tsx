@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MdArrowBack, MdCheckCircle, MdFitnessCenter, MdTimer, MdDelete, MdAddCircle } from "react-icons/md";
+import { MdArrowBack, MdCheckCircle, MdFitnessCenter, MdTimer, MdDelete, MdAddCircle, MdEdit, MdClose } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 
@@ -20,7 +20,8 @@ export default function WorkoutsPage() {
     const [loading, setLoading] = useState(true);
     const [completedExercises, setCompletedExercises] = useState<Set<number>>(new Set());
     const router = useRouter();
-    const [isEditing, setIsEditing] = useState(false);
+    const router = useRouter();
+    const [editingExerciseIndex, setEditingExerciseIndex] = useState<number | null>(null);
 
     useEffect(() => {
         async function loadRoutine() {
@@ -43,7 +44,7 @@ export default function WorkoutsPage() {
     }, []);
 
     const toggleExercise = (index: number) => {
-        if (isEditing) return; // Disable marking as complete while editing
+        if (editingExerciseIndex === index) return; // Disable marking while editing this specific card
         const newCompleted = new Set(completedExercises);
         if (newCompleted.has(index)) {
             newCompleted.delete(index);
@@ -101,16 +102,7 @@ export default function WorkoutsPage() {
                         <MdArrowBack className="w-6 h-6" />
                     </Button>
 
-                    <div className="flex items-center gap-2">
-                        <Button
-                            variant={isEditing ? "default" : "outline"}
-                            size="lg"
-                            onClick={() => setIsEditing(!isEditing)}
-                            className={isEditing ? "bg-indigo-600 font-bold text-white" : "text-slate-500 font-medium"}
-                        >
-                            {isEditing ? "Done" : "Edit"}
-                        </Button>
-                    </div>
+
                 </div>
 
                 <div>
@@ -169,18 +161,42 @@ export default function WorkoutsPage() {
                         onClick={() => toggleExercise(index)}
                     >
                         <CardContent className="p-4 flex items-start gap-4 cursor-pointer relative">
-                            {/* Delete Button in Edit Mode */}
-                            {isEditing && (
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        handleDeleteExercise(index);
-                                    }}
-                                    className="absolute top-2 right-2 p-2 text-slate-400 hover:text-red-500"
-                                >
-                                    <MdDelete className="w-5 h-5 text-red-500" />
-                                </button>
-                            )}
+                            {/* Edit/Delete Actions */}
+                            <div className="absolute top-2 right-2 flex items-center gap-2 z-10">
+                                {editingExerciseIndex === index ? (
+                                    <>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                handleDeleteExercise(index);
+                                                setEditingExerciseIndex(null);
+                                            }}
+                                            className="p-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 transition-colors"
+                                        >
+                                            <MdDelete className="w-5 h-5" />
+                                        </button>
+                                        <button
+                                            onClick={(e) => {
+                                                e.stopPropagation();
+                                                setEditingExerciseIndex(null);
+                                            }}
+                                            className="p-2 bg-slate-100 text-slate-500 rounded-lg hover:bg-slate-200 transition-colors"
+                                        >
+                                            <MdClose className="w-5 h-5" />
+                                        </button>
+                                    </>
+                                ) : (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            setEditingExerciseIndex(index);
+                                        }}
+                                        className="p-2 text-slate-300 hover:text-indigo-600 transition-colors"
+                                    >
+                                        <MdEdit className="w-5 h-5" />
+                                    </button>
+                                )}
+                            </div>
 
                             <div className="relative w-16 h-16 rounded-md overflow-hidden bg-slate-100 flex-shrink-0">
                                 {exercise.image ? (

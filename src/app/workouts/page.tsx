@@ -212,12 +212,12 @@ export default function WorkoutsPage() {
                                 )}
                             </div>
 
-                            <div className="flex-1 space-y-4">
+                            <div className="flex-1 space-y-3">
                                 {editingExerciseIndex === index ? (
                                     <Input
                                         value={exercise.name}
                                         onChange={(e) => handleUpdateExercise(index, 'name', e.target.value)}
-                                        className="font-bold text-xl h-14 border-2 border-indigo-100 focus:border-indigo-500 bg-white"
+                                        className="font-bold text-lg h-10 border-slate-200 focus:border-indigo-500 bg-white pr-24"
                                         placeholder="Exercise Name"
                                     />
                                 ) : (
@@ -226,7 +226,7 @@ export default function WorkoutsPage() {
                                     </h3>
                                 )}
 
-                                <div className="flex flex-wrap gap-4 items-center">
+                                <div className="flex flex-wrap gap-3 items-center">
                                     <div className="flex flex-col gap-1">
                                         <label className="text-[10px] uppercase font-bold text-slate-400 pl-1">Sets</label>
                                         {editingExerciseIndex === index ? (
@@ -234,7 +234,7 @@ export default function WorkoutsPage() {
                                                 type="number"
                                                 value={exercise.sets}
                                                 onChange={(e) => handleUpdateExercise(index, 'sets', parseInt(e.target.value))}
-                                                className="w-20 h-14 text-center text-xl font-bold border-2 border-indigo-100 focus:border-indigo-500 bg-white"
+                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white"
                                             />
                                         ) : (
                                             <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-600">
@@ -250,7 +250,7 @@ export default function WorkoutsPage() {
                                                 type="number"
                                                 value={exercise.reps}
                                                 onChange={(e) => handleUpdateExercise(index, 'reps', parseInt(e.target.value))}
-                                                className="w-20 h-14 text-center text-xl font-bold border-2 border-indigo-100 focus:border-indigo-500 bg-white"
+                                                className="w-16 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white"
                                             />
                                         ) : (
                                             <div className="bg-slate-100 px-4 py-2 rounded-lg text-sm font-medium text-slate-600">
@@ -268,9 +268,9 @@ export default function WorkoutsPage() {
                                                     value={exercise.weight || ""}
                                                     placeholder="-"
                                                     onChange={(e) => handleUpdateExercise(index, 'weight', parseFloat(e.target.value))}
-                                                    className="w-24 h-14 text-center text-xl font-bold border-2 border-indigo-100 focus:border-indigo-500 bg-white"
+                                                    className="w-20 h-10 text-center text-lg font-bold border-slate-200 focus:border-indigo-500 bg-white"
                                                 />
-                                                <span className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-medium">kg</span>
+                                                <span className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-400 text-xs font-medium">kg</span>
                                             </div>
                                         ) : (
                                             <div className={`px-4 py-2 rounded-lg text-sm font-bold ${exercise.weight ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-400"}`}>
@@ -287,7 +287,7 @@ export default function WorkoutsPage() {
                                                 value={exercise.note || ""}
                                                 placeholder="Add a note..."
                                                 onChange={(e) => handleUpdateExercise(index, 'note', e.target.value)}
-                                                className="h-7 text-xs bg-amber-50/50 border-amber-200"
+                                                className="h-8 text-xs bg-amber-50/50 border-amber-200"
                                             />
                                         ) : (
                                             exercise.note && (

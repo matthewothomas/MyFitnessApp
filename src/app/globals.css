@@ -1,0 +1,119 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+}
+
+:root {
+  --radius: 1rem;
+
+  /* Animated Gradient Background Colors */
+  --bg-gradient-from: #1e1b4b;
+  /* Deep Indigo */
+  --bg-gradient-to: #0f172a;
+  /* Slate 900 */
+
+  --background: transparent;
+  --foreground: #ffffff;
+
+  /* Glassmorphism Variables */
+  --card: rgba(255, 255, 255, 0.1);
+  --card-foreground: #ffffff;
+
+  --popover: rgba(26, 26, 26, 0.9);
+  --popover-foreground: #ffffff;
+
+  --primary: #6366f1;
+  /* Indigo 500 */
+  --primary-foreground: #ffffff;
+
+  --secondary: rgba(255, 255, 255, 0.2);
+  --secondary-foreground: #ffffff;
+
+  --muted: rgba(255, 255, 255, 0.1);
+  --muted-foreground: rgba(255, 255, 255, 0.6);
+
+  --accent: rgba(255, 255, 255, 0.1);
+  --accent-foreground: #ffffff;
+
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --input: rgba(255, 255, 255, 0.1);
+  --ring: #6366f1;
+}
+
+/* Base Body Styles with Animated Gradient */
+@layer base {
+  body {
+    @apply antialiased text-foreground min-h-screen relative overflow-x-hidden;
+    background: linear-gradient(135deg, var(--bg-gradient-from), var(--bg-gradient-to));
+    background-size: 400% 400%;
+    animation: gradient-animation 15s ease infinite;
+  }
+}
+
+@keyframes gradient-animation {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Utility classes for consistent glassmorphism */
+@layer utilities {
+  .glass {
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
+  }
+
+  .glass-card {
+    @apply glass rounded-3xl p-6;
+  }
+
+  .ios-input {
+    @apply bg-white/5 border-none rounded-xl text-white placeholder-white/40 focus:ring-2 focus:ring-indigo-500/50 backdrop-blur-md;
+  }
+}

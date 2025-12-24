@@ -107,10 +107,10 @@ export default function WorkoutDashboard() {
                     </div>
 
                     <Button
-                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-12 text-lg rounded-xl shadow-lg"
+                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-14 text-xl rounded-2xl shadow-lg active:scale-95 transition-transform"
                         onClick={() => router.push('/workouts')}
                     >
-                        Start Workout <ArrowRight className="ml-2 w-5 h-5" />
+                        Start Workout <ArrowRight className="ml-2 w-6 h-6" />
                     </Button>
                 </CardContent>
             </Card>

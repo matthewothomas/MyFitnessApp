@@ -122,9 +122,9 @@ export default function WorkoutsPage() {
                 <div className="ml-auto flex items-center gap-2">
                     <Button
                         variant={isEditing ? "default" : "outline"}
-                        size="sm"
+                        size="lg" // Larger size
                         onClick={() => setIsEditing(!isEditing)}
-                        className={isEditing ? "bg-indigo-600 font-bold" : "text-slate-500 font-medium"}
+                        className={isEditing ? "bg-indigo-600 font-bold h-10 px-6" : "text-slate-500 font-medium h-10 px-6"}
                     >
                         {isEditing ? "Done" : "Edit"}
                     </Button>
@@ -192,54 +192,54 @@ export default function WorkoutsPage() {
                                     <Input
                                         value={exercise.name}
                                         onChange={(e) => handleUpdateExercise(index, 'name', e.target.value)}
-                                        className="font-bold text-lg h-8"
+                                        className="font-bold text-lg h-12 border-2" // Larger input
                                     />
                                 ) : (
-                                    <h3 className={`font-bold text-lg ${completedExercises.has(index) ? "text-slate-400 line-through" : "text-slate-900"}`}>
+                                    <h3 className={`font-bold text-xl ${completedExercises.has(index) ? "text-slate-400 line-through" : "text-slate-900"}`}>
                                         {exercise.name}
                                     </h3>
                                 )}
 
-                                <div className="flex flex-wrap gap-2 items-center">
-                                    <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-medium text-slate-600">
+                                <div className="flex flex-wrap gap-3 items-center">
+                                    <div className="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-lg text-sm font-medium text-slate-600">
                                         {isEditing ? (
                                             <Input
                                                 type="number"
                                                 value={exercise.sets}
                                                 onChange={(e) => handleUpdateExercise(index, 'sets', parseInt(e.target.value))}
-                                                className="w-12 h-6 text-center p-0 bg-transparent border-none"
+                                                className="w-14 h-8 text-center p-0 bg-transparent border-none text-lg"
                                             />
                                         ) : (
-                                            <span>{exercise.sets}</span>
+                                            <span className="text-lg">{exercise.sets}</span>
                                         )}
                                         <span>sets</span>
                                     </div>
 
-                                    <div className="flex items-center gap-1 bg-slate-100 px-2 py-1 rounded text-xs font-medium text-slate-600">
+                                    <div className="flex items-center gap-2 bg-slate-100 px-3 py-2 rounded-lg text-sm font-medium text-slate-600">
                                         {isEditing ? (
                                             <Input
                                                 type="number"
                                                 value={exercise.reps}
                                                 onChange={(e) => handleUpdateExercise(index, 'reps', parseInt(e.target.value))}
-                                                className="w-12 h-6 text-center p-0 bg-transparent border-none"
+                                                className="w-14 h-8 text-center p-0 bg-transparent border-none text-lg"
                                             />
                                         ) : (
-                                            <span>{exercise.reps}</span>
+                                            <span className="text-lg">{exercise.reps}</span>
                                         )}
                                         <span>reps</span>
                                     </div>
 
-                                    <div className={`flex items-center gap-1 px-2 py-1 rounded text-xs font-bold ${exercise.weight ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-400"}`}>
+                                    <div className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-bold ${exercise.weight ? "bg-indigo-100 text-indigo-700" : "bg-slate-100 text-slate-400"}`}>
                                         {isEditing ? (
                                             <Input
                                                 type="number"
                                                 value={exercise.weight || ""}
                                                 placeholder="0"
                                                 onChange={(e) => handleUpdateExercise(index, 'weight', parseFloat(e.target.value))}
-                                                className="w-12 h-6 text-center p-0 bg-transparent border-none focus:ring-0"
+                                                className="w-16 h-8 text-center p-0 bg-transparent border-none focus:ring-0 text-lg"
                                             />
                                         ) : (
-                                            <span>{exercise.weight || "--"}</span>
+                                            <span className="text-lg">{exercise.weight || "--"}</span>
                                         )}
                                         <span>kg</span>
                                     </div>

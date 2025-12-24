@@ -11,13 +11,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { ArrowLeft, CheckCircle2, Dumbbell, Timer, Trash2, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
 
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "@/components/ui/select";
+
 // ... existing imports
 
 export default function WorkoutsPage() {
@@ -129,8 +123,8 @@ export default function WorkoutsPage() {
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
                                 className={`flex-shrink-0 px-6 py-3 rounded-full text-base font-bold transition-all duration-200 ${workoutType === type
-                                        ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
-                                        : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                                    ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
+                                    : "bg-slate-100 text-slate-500 hover:bg-slate-200"
                                     }`}
                             >
                                 {type}

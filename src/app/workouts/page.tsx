@@ -17,6 +17,7 @@ export default function WorkoutsPage() {
     const [loading, setLoading] = useState(true);
     const [completedExercises, setCompletedExercises] = useState<Set<number>>(new Set());
     const router = useRouter();
+    const [isEditing, setIsEditing] = useState(false);
 
     useEffect(() => {
         async function loadRoutine() {

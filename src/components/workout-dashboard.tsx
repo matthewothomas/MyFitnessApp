@@ -16,14 +16,32 @@ export default function WorkoutDashboard() {
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
+    const [greeting, setGreeting] = useState("Good Morning");
+
+    function getGreeting() {
+        const hour = parseInt(new Intl.DateTimeFormat('en-GB', {
+            hour: 'numeric',
+            hour12: false,
+            timeZone: 'Europe/London'
+        }).format(new Date()));
+
+        if (hour < 12) return "Good Morning";
+        if (hour < 18) return "Good Afternoon";
+        return "Good Evening";
+    }
+
     useEffect(() => {
         async function loadWorkout() {
+            setGreeting(getGreeting());
             try {
                 const supabase = createClient();
                 const { data: { user } } = await supabase.auth.getUser();
 
                 if (user) {
-                    setUserName(user.email?.split('@')[0] || "User");
+                    // Try to get name from metadata first, then email
+                    const name = user.user_metadata?.full_name || user.user_metadata?.name || user.email?.split('@')[0] || "User";
+                    setUserName(name);
+
                     const last = await fetchLastWorkoutLog(user.id);
                     const next = getNextWorkout(last);
                     setNextWorkout(next);
@@ -44,10 +62,21 @@ export default function WorkoutDashboard() {
             {/* Header / Profile Section */}
             <div className="flex items-center justify-between px-2">
                 <div>
-                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">Good Morning</h1>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">{greeting}</h1>
                     <p className="text-slate-500">Let's crush today's workout.</p>
                 </div>
-                <div onClick={() => router.push('/login')} className="cursor-pointer">
+                <div
+                    onClick={() => router.push('/login')}
+                    className="cursor-pointer focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 rounded-full"
+                    role="button"
+                    tabIndex={0}
+                    aria-label="Go to Profile / Login"
+                    onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            router.push('/login');
+                        }
+                    }}
+                >
                     <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
                         <AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${userName}`} />
                         <AvatarFallback className="bg-indigo-100 text-indigo-700 font-bold">{userInitials}</AvatarFallback>

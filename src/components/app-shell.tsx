@@ -23,6 +23,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                 <div className="flex justify-around items-center h-16 px-2">
                     <button
                         onClick={() => router.push("/")}
+                        aria-label="Workouts Tab"
                         className="flex flex-col items-center justify-center w-full h-full space-y-1"
                     >
                         <Dumbbell className={cn("w-6 h-6 transition-colors", activeTab === "workout" ? "text-indigo-600 fill-indigo-100" : "text-slate-400")} />
@@ -31,6 +32,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
                     <button
                         onClick={() => router.push("/nutrition")}
+                        aria-label="Nutrition Tab"
                         className="flex flex-col items-center justify-center w-full h-full space-y-1"
                     >
                         <UtensilsCrossed className={cn("w-6 h-6 transition-colors", activeTab === "nutrition" ? "text-indigo-600 fill-indigo-100" : "text-slate-400")} />
@@ -39,6 +41,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
 
                     <button
                         onClick={() => router.push("/body-metrics")}
+                        aria-label="Metrics Tab"
                         className="flex flex-col items-center justify-center w-full h-full space-y-1"
                     >
                         <ChartSpline className={cn("w-6 h-6 transition-colors", activeTab === "metrics" ? "text-indigo-600 fill-indigo-100" : "text-slate-400")} />

@@ -116,22 +116,22 @@ export default function WorkoutsPage() {
                 <div>
                     <h1 className="text-3xl font-black text-slate-900 mb-4 px-2">Select Workout</h1>
 
-                    {/* Horizontal Scrollable Cards */}
-                    <div className="flex gap-3 overflow-x-auto pb-6 px-2 no-scrollbar snap-x">
+                    {/* Grid Layout for Workout Cards */}
+                    <div className="grid grid-cols-2 gap-3 px-2 pb-6">
                         {Object.entries(WORKOUT_PLANS).map(([type, planExercises]) => (
                             <div
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
-                                className={`flex-shrink-0 w-32 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer snap-start ${workoutType === type
-                                    ? "border-indigo-600 bg-indigo-50 scale-105"
-                                    : "border-slate-200 bg-white hover:border-indigo-200"
+                                className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${workoutType === type
+                                        ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
+                                        : "border-slate-200 bg-white hover:border-indigo-200"
                                     }`}
                             >
-                                <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
                                     }`}>
-                                    <Dumbbell className="w-4 h-4" />
+                                    <Dumbbell className="w-5 h-5" />
                                 </div>
-                                <h3 className={`font-bold text-sm mb-1 ${workoutType === type ? "text-indigo-900" : "text-slate-700"
+                                <h3 className={`font-bold text-sm mb-1 text-center ${workoutType === type ? "text-indigo-900" : "text-slate-700"
                                     }`}>{type}</h3>
                                 <p className={`text-xs ${workoutType === type ? "text-indigo-600" : "text-slate-400"
                                     }`}>{planExercises.length} Exercises</p>

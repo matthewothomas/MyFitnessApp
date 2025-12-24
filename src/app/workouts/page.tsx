@@ -100,34 +100,47 @@ export default function WorkoutsPage() {
 
     return (
         <div className="container mx-auto p-4 max-w-lg min-h-screen pb-24">
-            <div className="flex items-center gap-4 mb-6">
-                <Button variant="ghost" size="icon" onClick={() => router.back()}>
-                    <ArrowLeft className="w-6 h-6" />
-                </Button>
-                <div className="flex-1">
-                    <Select value={workoutType || ""} onValueChange={handleWorkoutChange}>
-                        <SelectTrigger className="w-full text-2xl font-bold text-slate-900 border-none shadow-none bg-transparent p-0 h-auto focus:ring-0">
-                            <SelectValue placeholder="Select Workout" />
-                        </SelectTrigger>
-                        <SelectContent>
-                            {Object.keys(WORKOUT_PLANS).map((type) => (
-                                <SelectItem key={type} value={type} className="text-lg font-medium">
-                                    {type}
-                                </SelectItem>
-                            ))}
-                        </SelectContent>
-                    </Select>
-                    <p className="text-slate-500 text-sm">Target: {exercises.length} Exercises</p>
-                </div>
-                <div className="ml-auto flex items-center gap-2">
-                    <Button
-                        variant={isEditing ? "default" : "outline"}
-                        size="lg" // Larger size
-                        onClick={() => setIsEditing(!isEditing)}
-                        className={isEditing ? "bg-indigo-600 font-bold h-10 px-6" : "text-slate-500 font-medium h-10 px-6"}
-                    >
-                        {isEditing ? "Done" : "Edit"}
+            {/* Header / Navigation */}
+            <div className="flex flex-col space-y-4 mb-6">
+                <div className="flex items-center justify-between">
+                    <Button variant="ghost" size="icon" onClick={() => router.back()}>
+                        <ArrowLeft className="w-6 h-6" />
                     </Button>
+
+                    <div className="flex items-center gap-2">
+                        <Button
+                            variant={isEditing ? "default" : "outline"}
+                            size="lg"
+                            onClick={() => setIsEditing(!isEditing)}
+                            className={isEditing ? "bg-indigo-600 font-bold h-10 px-6" : "text-slate-500 font-medium h-10 px-6"}
+                        >
+                            {isEditing ? "Done" : "Edit"}
+                        </Button>
+                    </div>
+                </div>
+
+                <div>
+                    <h1 className="text-3xl font-black text-slate-900 mb-4 px-2">Select Workout</h1>
+
+                    {/* Horizontal Scrollable List */}
+                    <div className="flex gap-2 overflow-x-auto pb-4 px-2 no-scrollbar">
+                        {Object.keys(WORKOUT_PLANS).map((type) => (
+                            <button
+                                key={type}
+                                onClick={() => handleWorkoutChange(type)}
+                                className={`flex-shrink-0 px-6 py-3 rounded-full text-base font-bold transition-all duration-200 ${workoutType === type
+                                        ? "bg-indigo-600 text-white shadow-lg shadow-indigo-200"
+                                        : "bg-slate-100 text-slate-500 hover:bg-slate-200"
+                                    }`}
+                            >
+                                {type}
+                            </button>
+                        ))}
+                    </div>
+
+                    <p className="text-slate-500 text-sm px-2 font-medium">
+                        Target: {exercises.length} Exercises
+                    </p>
                 </div>
             </div>
 

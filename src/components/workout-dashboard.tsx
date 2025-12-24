@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dumbbell, ArrowRight, Calendar, Activity, Zap } from "lucide-react";
+import { Dumbbell, ArrowRight, Calendar, UtensilsCrossed } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function WorkoutDashboard() {
@@ -115,34 +115,35 @@ export default function WorkoutDashboard() {
                 </CardContent>
             </Card>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-2 gap-4">
-                <Card className="border-slate-100 shadow-sm bg-white/50 backdrop-blur-md">
-                    <CardHeader className="p-4 pb-2">
-                        <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-2">
-                            <Activity className="w-4 h-4 text-blue-500" />
+            {/* Nutrition Summary */}
+            <Card className="border-slate-100 shadow-sm bg-white/50 backdrop-blur-md" onClick={() => router.push('/nutrition')}>
+                <CardHeader className="p-4 pb-2">
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center">
+                            <UtensilsCrossed className="w-4 h-4 text-orange-500" />
                         </div>
-                        <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wide">Rotation</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                        <div className="text-2xl font-bold text-slate-900">6-Day</div>
-                        <p className="text-xs text-slate-400">PPL Split</p>
-                    </CardContent>
-                </Card>
-
-                <Card className="border-slate-100 shadow-sm bg-white/50 backdrop-blur-md">
-                    <CardHeader className="p-4 pb-2">
-                        <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center mb-2">
-                            <Zap className="w-4 h-4 text-emerald-500" />
+                        <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wide">Nutrition</CardTitle>
+                    </div>
+                </CardHeader>
+                <CardContent className="p-4 pt-0">
+                    <div className="grid grid-cols-2 gap-8">
+                        <div>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-2xl font-bold text-slate-900">0</span>
+                                <span className="text-sm text-slate-400 font-medium">/ 180g</span>
+                            </div>
+                            <p className="text-xs text-slate-500 font-medium mt-1">Protein</p>
                         </div>
-                        <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wide">Streak</CardTitle>
-                    </CardHeader>
-                    <CardContent className="p-4 pt-0">
-                        <div className="text-2xl font-bold text-slate-900">Active</div>
-                        <p className="text-xs text-slate-400">Keep it up!</p>
-                    </CardContent>
-                </Card>
-            </div>
+                        <div>
+                            <div className="flex items-baseline gap-1">
+                                <span className="text-2xl font-bold text-slate-900">0</span>
+                                <span className="text-sm text-slate-400 font-medium">/ 2500</span>
+                            </div>
+                            <p className="text-xs text-slate-500 font-medium mt-1">Calories</p>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
         </div>
     );
 }

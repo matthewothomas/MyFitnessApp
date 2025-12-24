@@ -102,7 +102,8 @@ export default function WorkoutDashboard({ userName = "User" }: { userName?: str
                     </div>
 
                     <Button
-                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-14 text-xl rounded-2xl active:scale-95 transition-transform"
+                        size="xl"
+                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold active:scale-95 transition-transform"
                         onClick={() => router.push('/workouts')}
                     >
                         Start Workout <MdArrowForward className="ml-2 w-6 h-6" />

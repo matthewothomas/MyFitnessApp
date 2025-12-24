@@ -106,7 +106,7 @@ export default function WorkoutsPage() {
                             variant={isEditing ? "default" : "outline"}
                             size="lg"
                             onClick={() => setIsEditing(!isEditing)}
-                            className={isEditing ? "bg-indigo-600 font-bold h-10 px-6 text-white" : "text-slate-500 font-medium h-10 px-6"}
+                            className={isEditing ? "bg-indigo-600 font-bold text-white" : "text-slate-500 font-medium"}
                         >
                             {isEditing ? "Done" : "Edit"}
                         </Button>
@@ -122,13 +122,13 @@ export default function WorkoutsPage() {
                             <div
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
-                                className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${workoutType === type
-                                    ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
-                                    : "border-slate-200 bg-white hover:border-indigo-200"
-                                    }`}
+                                className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer ${
+                                    workoutType === type
+                                        ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
+                                        : "border-slate-200 bg-white hover:border-indigo-200"
+                                }`}
                             >
-                                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
-                                    }`}>
+                                <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${
                                     <MdFitnessCenter className="w-5 h-5" />
                                 </div>
                                 <h3 className={`font-bold text-sm mb-1 text-center ${workoutType === type ? "text-indigo-900" : "text-slate-700"
@@ -137,11 +137,11 @@ export default function WorkoutsPage() {
                                     }`}>{planExercises.length} Exercises</p>
                             </div>
                         ))}
-                    </div>
                 </div>
             </div>
+        </div>
 
-            {/* Progress Bar */}
+            {/* Progress Bar */ }
             <div className="w-full bg-slate-100 h-2 rounded-full mb-8 overflow-hidden">
                 <div
                     className="bg-indigo-600 h-full transition-all duration-500 ease-out"
@@ -300,7 +300,7 @@ export default function WorkoutsPage() {
             </div>
 
 
-        </div>
+        </div >
     );
 }
 

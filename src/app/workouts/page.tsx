@@ -15,14 +15,16 @@ import { useRouter } from "next/navigation";
 // ... existing imports
 
 const WORKOUT_THEMES: Record<string, { main: string; light: string; border: string; text: string; ring: string }> = {
-    Push: { main: "bg-indigo-100", light: "bg-indigo-50", border: "border-indigo-600", text: "text-indigo-600", ring: "ring-indigo-600" },
-    Pull: { main: "bg-cyan-100", light: "bg-cyan-50", border: "border-cyan-600", text: "text-cyan-600", ring: "ring-cyan-600" },
-    Legs: { main: "bg-emerald-100", light: "bg-emerald-50", border: "border-emerald-600", text: "text-emerald-600", ring: "ring-emerald-600" },
+    "Push 1": { main: "bg-indigo-100", light: "bg-indigo-50", border: "border-indigo-600", text: "text-indigo-600", ring: "ring-indigo-600" },
+    "Push 2": { main: "bg-indigo-100", light: "bg-indigo-50", border: "border-indigo-600", text: "text-indigo-600", ring: "ring-indigo-600" },
+    "Pull 1": { main: "bg-cyan-100", light: "bg-cyan-50", border: "border-cyan-600", text: "text-cyan-600", ring: "ring-cyan-600" },
+    "Pull 2": { main: "bg-cyan-100", light: "bg-cyan-50", border: "border-cyan-600", text: "text-cyan-600", ring: "ring-cyan-600" },
+    "Legs": { main: "bg-emerald-100", light: "bg-emerald-50", border: "border-emerald-600", text: "text-emerald-600", ring: "ring-emerald-600" },
 };
 
 export default function WorkoutsPage() {
     const router = useRouter();
-    const [workoutType, setWorkoutType] = useState<WorkoutType>("Push");
+    const [workoutType, setWorkoutType] = useState<WorkoutType>("Push 1");
     const [exercises, setExercises] = useState<Exercise[]>([]);
     const [loading, setLoading] = useState(true);
     const [editingExerciseIndex, setEditingExerciseIndex] = useState<number | null>(null);
@@ -34,51 +36,15 @@ export default function WorkoutsPage() {
     useEffect(() => {
         const loadRoutine = () => {
             // ... existing load logic
-            setExercises(WORKOUT_PLANS["Push"]);
+            setExercises(WORKOUT_PLANS["Push 1"]);
             setLoading(false);
         };
         loadRoutine();
     }, []);
 
-    const toggleExercise = (index: number) => {
-        if (editingExerciseIndex === index) return;
-        const newCompleted = new Set(completedExercises);
-        if (newCompleted.has(index)) {
-            newCompleted.delete(index);
-        } else {
-            newCompleted.add(index);
-        }
-        setCompletedExercises(newCompleted);
-    };
+    // ... existing handlers ...
 
-    const handleUpdateExercise = (index: number, field: keyof Exercise, value: any) => {
-        const newExercises = [...exercises];
-        newExercises[index] = { ...newExercises[index], [field]: value };
-        setExercises(newExercises);
-    };
-
-    const handleDeleteExercise = (index: number) => {
-        const newExercises = exercises.filter((_, i) => i !== index);
-        setExercises(newExercises);
-    };
-
-    const handleAddExercise = () => {
-        setExercises([...exercises, { name: "New Exercise", sets: 3, reps: 10 }]);
-        setTimeout(() => window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' }), 100);
-    };
-
-    const handleWorkoutChange = (value: string) => {
-        const type = value as WorkoutType;
-        setWorkoutType(type);
-        setExercises(WORKOUT_PLANS[type]);
-        setCompletedExercises(new Set());
-    };
-
-    const progress = exercises.length > 0
-        ? Math.round((completedExercises.size / exercises.length) * 100)
-        : 0;
-
-    const theme = WORKOUT_THEMES[workoutType] || WORKOUT_THEMES["Push"];
+    const theme = WORKOUT_THEMES[workoutType] || WORKOUT_THEMES["Push 1"];
 
     if (loading) {
         return (
@@ -109,7 +75,7 @@ export default function WorkoutsPage() {
                     <div className="grid grid-cols-3 gap-3 px-2 pb-6">
                         {Object.entries(WORKOUT_PLANS).map(([type, planExercises]) => {
                             const isSelected = workoutType === type;
-                            const t = WORKOUT_THEMES[type] || WORKOUT_THEMES["Push"];
+                            const t = WORKOUT_THEMES[type] || WORKOUT_THEMES["Push 1"];
                             return (
                                 <div
                                     key={type}

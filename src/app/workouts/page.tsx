@@ -263,17 +263,7 @@ export default function WorkoutsPage() {
                 )}
             </div>
 
-            <div className="fixed bottom-24 left-0 right-0 px-4">
-                <div className="max-w-lg mx-auto">
-                    <Button
-                        size="lg"
-                        disabled={isEditing}
-                        className="w-full text-lg font-bold shadow-xl shadow-indigo-200 bg-indigo-600 hover:bg-indigo-700 h-14 rounded-2xl disabled:opacity-50 disabled:cursor-not-allowed"
-                    >
-                        {isEditing ? "Finish Editing to Complete" : "Complete Workout"}
-                    </Button>
-                </div>
-            </div>
+
         </div>
     );
 }

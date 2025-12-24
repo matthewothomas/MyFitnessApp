@@ -27,10 +27,10 @@ export default function WorkoutsPage() {
     // Icon Customization State
     const [pickerOpen, setPickerOpen] = useState(false);
     const [targetCustomizationIndex, setTargetCustomizationIndex] = useState<number | null>(null);
-    const [customization, setCustomization] = useState<Record<string, { iconKey: string; iconColor: string; bgColor: string }>>({});
+    const [customization, setCustomization] = useState<Record<string, { iconKey: string; iconColor: string; bgColor: string; svgString?: string }>>({});
 
     // Track completed exercises
-    const [completedExercises, setCompletedExercises] = useState<Set<number>>(new Set());
+    const [completedExercises, setCompletedExercises] = new Set());
 
     // Load initial exercises
     useEffect(() => {
@@ -210,16 +210,30 @@ export default function WorkoutsPage() {
                                 <div className="w-full h-full flex items-center justify-center">
                                     {(() => {
                                         const custom = customization[`${workoutType}-${index}`];
-                                        const Icon = custom ? (ICON_MAP[custom.iconKey] || MdFitnessCenter) : null;
 
+                                        // Priority 1: Custom SVG (AI Generated)
+                                        if (custom?.svgString) {
+                                            return (
+                                                <div
+                                                    className="w-8 h-8 text-current"
+                                                    style={{ color: custom.iconColor }}
+                                                    dangerouslySetInnerHTML={{ __html: custom.svgString }}
+                                                />
+                                            );
+                                        }
+
+                                        // Priority 2: Custom Icon Key
+                                        const Icon = custom ? (ICON_MAP[custom.iconKey] || MdFitnessCenter) : null;
                                         if (Icon) {
                                             return <Icon className="w-8 h-8" style={{ color: custom?.iconColor || "#94a3b8" }} />;
                                         }
 
+                                        // Priority 3: Default Exercise Image
                                         if (exercise.image) {
                                             return <img src={exercise.image} alt={exercise.name} className="w-full h-full object-cover" />;
                                         }
 
+                                        // Fallback
                                         return <MdFitnessCenter className="w-8 h-8 text-slate-400" />;
                                     })()}
                                 </div>

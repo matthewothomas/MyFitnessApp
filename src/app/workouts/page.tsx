@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { MdArrowBack, MdCheckCircle, MdFitnessCenter, MdTimer, MdDelete, MdAdd } from "react-icons/md";
+import { MdArrowBack, MdCheckCircle, MdFitnessCenter, MdTimer, MdDelete, MdAddCircle } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 
@@ -123,8 +123,8 @@ export default function WorkoutsPage() {
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
                                 className={`flex flex-col items-center justify-center p-4 rounded-2xl border-2 transition-all duration-200 cursor-pointer ${workoutType === type
-                                        ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
-                                        : "border-slate-200 bg-white hover:border-indigo-200"
+                                    ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
+                                    : "border-slate-200 bg-white hover:border-indigo-200"
                                     }`}
                             >
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
@@ -294,7 +294,7 @@ export default function WorkoutsPage() {
                         className="w-full border-dashed border-2 h-16 text-slate-400 hover:text-indigo-600 hover:border-indigo-600 hover:bg-indigo-50"
                         onClick={handleAddExercise}
                     >
-                        <MdAdd className="w-5 h-5 mr-1" /> Add Exercise
+                        <MdAddCircle className="w-5 h-5 mr-1" /> Add Exercise
                     </Button>
                 )}
             </div>

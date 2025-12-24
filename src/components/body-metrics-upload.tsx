@@ -16,7 +16,7 @@ import {
     ResponsiveContainer,
 } from "recharts";
 import { format } from "date-fns";
-import { MdUpload, MdSave, MdCheck, MdTableChart } from "react-icons/md";
+import { MdCloudUpload, MdSave, MdCheckCircle, MdTableChart } from "react-icons/md";
 
 export default function BodyMetricsUpload() {
     const [data, setData] = useState<BoditraxRecord[]>([]);
@@ -93,7 +93,7 @@ export default function BodyMetricsUpload() {
                 />
                 <CardContent className="flex flex-col items-center justify-center p-8 text-center">
                     <div className="bg-white p-4 rounded-full shadow-sm mb-4 group-hover:scale-110 transition-transform">
-                        <MdUpload className="mx-auto h-12 w-12 text-slate-400 group-hover:text-indigo-500 transition-colors" />
+                        <MdCloudUpload className="mx-auto h-12 w-12 text-slate-400 group-hover:text-indigo-500 transition-colors" />
                     </div>
                     <h3 className="font-semibold text-slate-900 text-lg">Upload Boditrax CSV</h3>
                     <p className="text-sm text-slate-500 mt-2 max-w-[200px] mx-auto">
@@ -114,7 +114,7 @@ export default function BodyMetricsUpload() {
                             disabled={saving || saved}
                             className={`${saved ? 'bg-emerald-600 hover:bg-emerald-700' : 'bg-indigo-600 hover:bg-indigo-700'} text-white rounded-xl`}
                         >
-                            {saved ? <MdCheck className="mr-2 h-4 w-4" /> : <MdSave className="mr-2 h-4 w-4 animate-spin" />}
+                            {saved ? <MdCheckCircle className="mr-2 h-4 w-4" /> : <MdSave className="mr-2 h-4 w-4 animate-spin" />}
                             {saved ? "Saved" : saving ? "Saving..." : "Save"}
                         </Button>
                     </CardHeader>

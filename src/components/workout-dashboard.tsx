@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Dumbbell } from "lucide-react";
-import { MdCalendarToday, MdArrowForward, MdLocalDining } from "react-icons/md";
+import { MdCalendarMonth, MdArrowForward, MdLocalDining } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 export default function WorkoutDashboard({ userName = "User" }: { userName?: string }) {
@@ -93,7 +93,7 @@ export default function WorkoutDashboard({ userName = "User" }: { userName?: str
                 <CardContent className="p-6 relative z-10">
                     <div className="flex justify-between items-start mb-4">
                         <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
-                            <MdCalendarToday className="w-5 h-5 text-white" />
+                            <MdCalendarMonth className="w-5 h-5 text-white" />
                         </div>
                     </div>
 

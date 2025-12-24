@@ -9,9 +9,10 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     const router = useRouter();
 
     const activeTab =
-        pathname === "/body-metrics" ? "metrics" :
-            pathname === "/nutrition" ? "nutrition" :
-                "workout";
+        pathname === "/history" ? "history" :
+            pathname === "/body-metrics" ? "metrics" :
+                pathname === "/nutrition" ? "nutrition" :
+                    "workout";
 
     return (
         <div className="min-h-screen bg-slate-50 pb-24">

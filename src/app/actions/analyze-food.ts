@@ -33,7 +33,7 @@ export async function analyzeFoodAction(formData: FormData) {
             prompt: 'Analyze this food image. Estimate the nutritional content for the entire visible portion.',
             messages: [
                 {
-                    role: 'user',
+                    role: 'user' as const,
                     content: [
                         { type: 'text', text: 'Analyze this food image. Estimate the nutritional content for the entire visible portion.' },
                         { type: 'image', image: base64Image }

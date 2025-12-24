@@ -6,6 +6,7 @@ export interface Exercise {
     reps: number;
     weight?: number; // kg
     note?: string;
+    image?: string; // URL for the exercise image
 }
 
 export interface WorkoutRoutine {

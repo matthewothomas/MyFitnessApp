@@ -172,11 +172,19 @@ export default function WorkoutsPage() {
                                 </button>
                             )}
 
-                            <div className={`mt-1 h-6 w-6 rounded-full border-2 flex items-center justify-center transition-colors ${completedExercises.has(index)
-                                ? "bg-emerald-500 border-emerald-500"
-                                : "border-slate-300 bg-transparent"
-                                }`}>
-                                {completedExercises.has(index) && <CheckCircle2 className="w-4 h-4 text-white" />}
+                            <div className="relative w-16 h-16 rounded-md overflow-hidden bg-slate-100 flex-shrink-0">
+                                {exercise.image ? (
+                                    <img src={exercise.image} alt={exercise.name} className="w-full h-full object-cover" />
+                                ) : (
+                                    <div className="w-full h-full flex items-center justify-center bg-indigo-50 text-indigo-200">
+                                        <Dumbbell className="w-8 h-8" />
+                                    </div>
+                                )}
+                                {completedExercises.has(index) && (
+                                    <div className="absolute inset-0 bg-emerald-500/80 flex items-center justify-center">
+                                        <CheckCircle2 className="w-8 h-8 text-white" />
+                                    </div>
+                                )}
                             </div>
 
                             <div className="flex-1 space-y-3">

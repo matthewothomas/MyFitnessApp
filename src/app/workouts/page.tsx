@@ -106,7 +106,7 @@ export default function WorkoutsPage() {
                             variant={isEditing ? "default" : "outline"}
                             size="lg"
                             onClick={() => setIsEditing(!isEditing)}
-                            className={isEditing ? "bg-indigo-600 font-bold h-10 px-6" : "text-slate-500 font-medium h-10 px-6"}
+                            className={isEditing ? "bg-indigo-600 font-bold h-10 px-6 text-white" : "text-slate-500 font-medium h-10 px-6"}
                         >
                             {isEditing ? "Done" : "Edit"}
                         </Button>

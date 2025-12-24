@@ -3,17 +3,11 @@
 import { useEffect, useState } from "react";
 import { getNextWorkout, fetchLastWorkoutLog, WorkoutType } from "@/lib/workout-engine";
 import { createClient } from "@/lib/supabase/client";
-import {
-    App,
-    Page,
-    Navbar,
-    Block,
-    BlockTitle,
-    List,
-    ListItem,
-    Button as KonstaButton
-} from "konsta/react";
-import { Dumbbell, ArrowRight, Calendar, Activity, User } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Skeleton } from "@/components/ui/skeleton";
+import { Dumbbell, ArrowRight, Calendar, Activity, Zap } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function WorkoutDashboard() {
@@ -30,13 +24,9 @@ export default function WorkoutDashboard() {
 
                 if (user) {
                     setUserName(user.email?.split('@')[0] || "User");
-                    // Assuming fetchLastWorkoutLog handles the DB call
                     const last = await fetchLastWorkoutLog(user.id);
                     const next = getNextWorkout(last);
                     setNextWorkout(next);
-                } else {
-                    // Redirect to login if needed, or stay as guest
-                    // router.push('/login'); 
                 }
             } catch (e) {
                 console.error("Failed to load workout", e);
@@ -47,68 +37,83 @@ export default function WorkoutDashboard() {
         loadWorkout();
     }, []);
 
+    const userInitials = userName.slice(0, 2).toUpperCase();
+
     return (
-        <div className="h-full w-full">
-            <BlockTitle className="!text-slate-500 !font-semibold !tracking-wide">Today's Focus</BlockTitle>
-            <Block strong inset className="!rounded-[2rem] !bg-white/80 !backdrop-blur-xl !border !border-slate-200/60 !text-slate-900 !p-0 overflow-hidden shadow-xl shadow-indigo-100/50 relative">
-                {loading ? (
-                    <div className="p-4 animate-pulse h-24 bg-slate-100"></div>
-                ) : (
-                    <div className="relative">
-                        {/* Abstract background blobs - lighter for white theme */}
-                        <div className="absolute top-0 right-0 -mr-10 -mt-10 w-40 h-40 bg-indigo-100/50 rounded-full blur-3xl"></div>
-                        <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-purple-100/50 rounded-full blur-3xl"></div>
-
-                        <div className="p-8 flex items-center justify-between relative z-10">
-                            <div>
-                                <div className="text-xs font-bold text-indigo-500 uppercase tracking-widest mb-2 flex items-center gap-1">
-                                    <Calendar className="w-3 h-3" /> Suggested Workout
-                                </div>
-                                <div className="text-4xl font-black text-slate-900 tracking-tight">{nextWorkout}</div>
-                            </div>
-                            <KonstaButton
-                                rounded
-                                large
-                                className="!w-16 !h-16 !p-0 flex items-center justify-center !bg-indigo-600 !text-white shadow-lg shadow-indigo-200 hover:scale-105 transition-transform"
-                            >
-                                <ArrowRight className="h-8 w-8" />
-                            </KonstaButton>
-                        </div>
-                    </div>
-                )}
-            </Block>
-
-            <BlockTitle className="!text-slate-500 !font-semibold !tracking-wide">Stats</BlockTitle>
-            <List strong inset className="!rounded-2xl !bg-transparent !m-0 !p-0 shadow-none">
-                <div className="grid grid-cols-2 gap-4">
-                    <div className="glass-card flex flex-col items-center justify-center gap-2">
-                        <Activity className="h-8 w-8 text-blue-500 mb-1 drop-shadow-sm" />
-                        <span className="text-slate-500 text-xs uppercase tracking-wide font-semibold">Rotation</span>
-                        <span className="block text-slate-900 font-black text-2xl">6-Day</span>
-                    </div>
-                    <div className="glass-card flex flex-col items-center justify-center gap-2">
-                        <Dumbbell className="h-8 w-8 text-emerald-500 mb-1 drop-shadow-sm" />
-                        <span className="text-slate-500 text-xs uppercase tracking-wide font-semibold">Streak</span>
-                        <span className="block text-slate-900 font-black text-2xl">Active</span>
-                    </div>
+        <div className="space-y-6 pt-4">
+            {/* Header / Profile Section */}
+            <div className="flex items-center justify-between px-2">
+                <div>
+                    <h1 className="text-2xl font-bold tracking-tight text-slate-900">Good Morning</h1>
+                    <p className="text-slate-500">Let's crush today's workout.</p>
                 </div>
-            </List>
-
-            <BlockTitle className="!text-slate-500 !font-semibold !tracking-wide">Account</BlockTitle>
-            <List strong inset className="!rounded-2xl !bg-transparent !m-0 !p-0 shadow-none">
-                <div className="glass-card !p-4 flex items-center justify-between cursor-pointer hover:bg-slate-50/50 transition-colors" onClick={() => router.push('/login')}>
-                    <div className="flex items-center gap-4">
-                        <div className="bg-indigo-50 p-3 rounded-full border border-indigo-100">
-                            <User className="text-indigo-500 w-6 h-6" />
-                        </div>
-                        <div>
-                            <span className="block text-slate-900 font-bold text-lg">{userName}</span>
-                            <span className="text-slate-500 text-sm">{userName === "Guest" ? "Tap to sign in" : "View Profile"}</span>
-                        </div>
-                    </div>
-                    <ArrowRight className="text-slate-300 w-5 h-5" />
+                <div onClick={() => router.push('/login')} className="cursor-pointer">
+                    <Avatar className="h-12 w-12 border-2 border-white shadow-sm">
+                        <AvatarImage src={`https://api.dicebear.com/7.x/notionists/svg?seed=${userName}`} />
+                        <AvatarFallback className="bg-indigo-100 text-indigo-700 font-bold">{userInitials}</AvatarFallback>
+                    </Avatar>
                 </div>
-            </List>
+            </div>
+
+            {/* Main Action Card */}
+            <Card className="border-0 shadow-xl shadow-indigo-100 bg-gradient-to-br from-indigo-600 to-violet-600 text-white overflow-hidden relative">
+                <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
+                <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-black/10 rounded-full blur-3xl"></div>
+
+                <CardContent className="p-6 relative z-10">
+                    <div className="flex justify-between items-start mb-4">
+                        <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
+                            <Calendar className="w-5 h-5 text-white" />
+                        </div>
+                        <span className="text-xs font-bold uppercase tracking-widest bg-white/10 px-2 py-1 rounded text-white/80">Suggested</span>
+                    </div>
+
+                    <div className="space-y-1 mb-8">
+                        <h2 className="text-sm font-medium text-indigo-100">Today's Focus</h2>
+                        {loading ? (
+                            <Skeleton className="h-10 w-48 bg-white/20" />
+                        ) : (
+                            <h3 className="text-4xl font-black tracking-tight text-white">{nextWorkout}</h3>
+                        )}
+                    </div>
+
+                    <Button
+                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-12 text-lg rounded-xl shadow-lg"
+                        onClick={() => router.push('/workouts')}
+                    >
+                        Start Workout <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                </CardContent>
+            </Card>
+
+            {/* Stats Grid */}
+            <div className="grid grid-cols-2 gap-4">
+                <Card className="border-slate-100 shadow-sm bg-white/50 backdrop-blur-md">
+                    <CardHeader className="p-4 pb-2">
+                        <div className="w-8 h-8 rounded-full bg-blue-50 flex items-center justify-center mb-2">
+                            <Activity className="w-4 h-4 text-blue-500" />
+                        </div>
+                        <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wide">Rotation</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-4 pt-0">
+                        <div className="text-2xl font-bold text-slate-900">6-Day</div>
+                        <p className="text-xs text-slate-400">PPL Split</p>
+                    </CardContent>
+                </Card>
+
+                <Card className="border-slate-100 shadow-sm bg-white/50 backdrop-blur-md">
+                    <CardHeader className="p-4 pb-2">
+                        <div className="w-8 h-8 rounded-full bg-emerald-50 flex items-center justify-center mb-2">
+                            <Zap className="w-4 h-4 text-emerald-500" />
+                        </div>
+                        <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wide">Streak</CardTitle>
+                    </CardHeader>
+                    <CardContent className="p-4 pt-0">
+                        <div className="text-2xl font-bold text-slate-900">Active</div>
+                        <p className="text-xs text-slate-400">Keep it up!</p>
+                    </CardContent>
+                </Card>
+            </div>
         </div>
     );
 }

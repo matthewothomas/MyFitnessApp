@@ -1,63 +1,51 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { Page, Navbar, Tabbar, TabbarLink, Icon } from "konsta/react";
-import { Dumbbell, ChartColumn, Utensils } from "lucide-react";
+import { Dumbbell, ChartSpline, UtensilsCrossed } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
     const router = useRouter();
 
-    // Determine active tab based on pathname
-    // '/' -> Workout
-    // '/body-metrics' -> Metrics
-    // '/nutrition' -> Nutrition
     const activeTab =
         pathname === "/body-metrics" ? "metrics" :
             pathname === "/nutrition" ? "nutrition" :
                 "workout";
 
     return (
-        <Page className="!bg-transparent">
-            <div className="h-full pb-20 overflow-y-auto no-scrollbar">
+        <div className="min-h-screen bg-slate-50 pb-24">
+            <main className="container max-w-md mx-auto min-h-screen">
                 {children}
-            </div>
+            </main>
 
-            <Tabbar className="fixed bottom-0 left-0 z-50 !bg-white/80 !backdrop-blur-xl border-t !border-slate-200/60 shadow-[0_-5px_20px_rgba(0,0,0,0.05)] safe-area-bottom">
-                <TabbarLink
-                    active={activeTab === "workout"}
-                    onClick={() => router.push("/")}
-                    icon={
-                        <Icon
-                            ios={<Dumbbell className={`w-7 h-7 ${activeTab === "workout" ? "text-indigo-600 fill-indigo-600 drop-shadow-sm" : "text-slate-400"}`} />}
-                            material={<Dumbbell className={`w-7 h-7 ${activeTab === "workout" ? "text-indigo-600 fill-indigo-600" : "text-slate-400"}`} />}
-                        />
-                    }
-                    label={<span className={`text-[10px] font-medium ${activeTab === "workout" ? "text-indigo-600" : "text-slate-400"}`}>Workout</span>}
-                />
-                <TabbarLink
-                    active={activeTab === "nutrition"}
-                    onClick={() => router.push("/nutrition")}
-                    icon={
-                        <Icon
-                            ios={<Utensils className={`w-7 h-7 ${activeTab === "nutrition" ? "text-indigo-600 fill-indigo-600 drop-shadow-sm" : "text-slate-400"}`} />}
-                            material={<Utensils className={`w-7 h-7 ${activeTab === "nutrition" ? "text-indigo-600 fill-indigo-600" : "text-slate-400"}`} />}
-                        />
-                    }
-                    label={<span className={`text-[10px] font-medium ${activeTab === "nutrition" ? "text-indigo-600" : "text-slate-400"}`}>Nutrition</span>}
-                />
-                <TabbarLink
-                    active={activeTab === "metrics"}
-                    onClick={() => router.push("/body-metrics")}
-                    icon={
-                        <Icon
-                            ios={<ChartColumn className={`w-7 h-7 ${activeTab === "metrics" ? "text-indigo-600 fill-indigo-600 drop-shadow-sm" : "text-slate-400"}`} />}
-                            material={<ChartColumn className={`w-7 h-7 ${activeTab === "metrics" ? "text-indigo-600 fill-indigo-600" : "text-slate-400"}`} />}
-                        />
-                    }
-                    label={<span className={`text-[10px] font-medium ${activeTab === "metrics" ? "text-indigo-600" : "text-slate-400"}`}>Metrics</span>}
-                />
-            </Tabbar>
-        </Page>
+            <div className="fixed bottom-6 left-6 right-6 md:w-[400px] md:left-1/2 md:-translate-x-1/2 rounded-full border border-slate-200 bg-white/90 backdrop-blur-xl shadow-lg z-50">
+                <div className="flex justify-around items-center h-16 px-2">
+                    <button
+                        onClick={() => router.push("/")}
+                        className="flex flex-col items-center justify-center w-full h-full space-y-1"
+                    >
+                        <Dumbbell className={cn("w-6 h-6 transition-colors", activeTab === "workout" ? "text-indigo-600 fill-indigo-100" : "text-slate-400")} />
+                        <span className={cn("text-[10px] font-medium transition-colors", activeTab === "workout" ? "text-indigo-600" : "text-slate-400")}>Workouts</span>
+                    </button>
+
+                    <button
+                        onClick={() => router.push("/nutrition")}
+                        className="flex flex-col items-center justify-center w-full h-full space-y-1"
+                    >
+                        <UtensilsCrossed className={cn("w-6 h-6 transition-colors", activeTab === "nutrition" ? "text-indigo-600 fill-indigo-100" : "text-slate-400")} />
+                        <span className={cn("text-[10px] font-medium transition-colors", activeTab === "nutrition" ? "text-indigo-600" : "text-slate-400")}>Nutrition</span>
+                    </button>
+
+                    <button
+                        onClick={() => router.push("/body-metrics")}
+                        className="flex flex-col items-center justify-center w-full h-full space-y-1"
+                    >
+                        <ChartSpline className={cn("w-6 h-6 transition-colors", activeTab === "metrics" ? "text-indigo-600 fill-indigo-100" : "text-slate-400")} />
+                        <span className={cn("text-[10px] font-medium transition-colors", activeTab === "metrics" ? "text-indigo-600" : "text-slate-400")}>Metrics</span>
+                    </button>
+                </div>
+            </div>
+        </div>
     );
 }

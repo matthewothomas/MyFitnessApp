@@ -93,27 +93,27 @@ export default function BodyMetricsUpload() {
     return (
         <div className="space-y-6">
             <div className="glass-card !p-8">
-                <div className="flex flex-col items-center justify-center border-2 border-dashed border-white/20 rounded-2xl p-8 hover:bg-white/5 transition-colors cursor-pointer relative">
+                <div className="flex flex-col items-center justify-center border-2 border-dashed border-slate-200 rounded-2xl p-8 hover:bg-slate-50 transition-colors cursor-pointer relative">
                     <input
                         type="file"
                         accept=".csv"
                         onChange={handleFileUpload}
                         className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     />
-                    <Upload className="w-10 h-10 text-indigo-400 mb-4" />
-                    <p className="text-white font-medium text-lg">Tap to Upload CSV</p>
-                    <p className="text-white/60 text-sm mt-2">Supports Boditrax Exports</p>
+                    <Upload className="w-10 h-10 text-indigo-500 mb-4" />
+                    <p className="text-slate-900 font-medium text-lg">Tap to Upload CSV</p>
+                    <p className="text-slate-500 text-sm mt-2">Supports Boditrax Exports</p>
                 </div>
             </div>
 
             {data.length > 0 && (
                 <div className="glass-card">
                     <div className="flex items-center justify-between mb-6">
-                        <h2 className="text-xl font-bold text-white">Analysis</h2>
+                        <h2 className="text-xl font-bold text-slate-900">Analysis</h2>
                         <Button
                             onClick={handleSave}
                             disabled={saving || saved}
-                            className={`${saved ? 'bg-green-500' : 'bg-indigo-500'} text-white border-0`}
+                            className={`${saved ? 'bg-green-500' : 'bg-indigo-600'} text-white border-0 hover:opacity-90`}
                         >
                             {saved ? <Check className="w-4 h-4 mr-2" /> : <Save className="w-4 h-4 mr-2" />}
                             {saved ? "Saved" : saving ? "Saving..." : "Save to Cloud"}
@@ -122,27 +122,27 @@ export default function BodyMetricsUpload() {
                     <div className="h-[300px] w-full">
                         <ResponsiveContainer width="100%" height="100%">
                             <LineChart data={data}>
-                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.1)" vertical={false} />
+                                <CartesianGrid strokeDasharray="3 3" stroke="rgba(0,0,0,0.05)" vertical={false} />
                                 <XAxis
                                     dataKey="date"
                                     tickFormatter={(str) => format(new Date(str), "MMM d")}
-                                    stroke="rgba(255,255,255,0.5)"
-                                    tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
+                                    stroke="rgba(0,0,0,0.3)"
+                                    tick={{ fill: 'rgba(0,0,0,0.5)', fontSize: 12 }}
                                 />
                                 <YAxis
                                     yAxisId="left"
-                                    stroke="rgba(255,255,255,0.5)"
-                                    tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
+                                    stroke="rgba(0,0,0,0.3)"
+                                    tick={{ fill: 'rgba(0,0,0,0.5)', fontSize: 12 }}
                                 />
                                 <YAxis
                                     yAxisId="right"
                                     orientation="right"
-                                    stroke="rgba(255,255,255,0.5)"
-                                    tick={{ fill: 'rgba(255,255,255,0.5)', fontSize: 12 }}
+                                    stroke="rgba(0,0,0,0.3)"
+                                    tick={{ fill: 'rgba(0,0,0,0.5)', fontSize: 12 }}
                                 />
                                 <Tooltip
-                                    contentStyle={{ backgroundColor: '#1e1b4b', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px', color: '#fff' }}
-                                    itemStyle={{ color: '#fff' }}
+                                    contentStyle={{ backgroundColor: '#ffffff', border: '1px solid rgba(0,0,0,0.1)', borderRadius: '12px', color: '#0f172a', boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1)' }}
+                                    itemStyle={{ color: '#0f172a' }}
                                     labelFormatter={(label) => format(new Date(label), "PPP")}
                                 />
                                 <Legend />
@@ -150,19 +150,19 @@ export default function BodyMetricsUpload() {
                                     yAxisId="left"
                                     type="monotone"
                                     dataKey="Weight"
-                                    stroke="#818cf8"
+                                    stroke="#6366f1"
                                     strokeWidth={3}
-                                    dot={{ fill: '#818cf8', strokeWidth: 0, r: 4 }}
-                                    activeDot={{ r: 6, fill: '#fff' }}
+                                    dot={{ fill: '#6366f1', strokeWidth: 0, r: 4 }}
+                                    activeDot={{ r: 6, fill: '#fff', stroke: '#6366f1', strokeWidth: 2 }}
                                 />
                                 <Line
                                     yAxisId="right"
                                     type="monotone"
                                     dataKey="Fat Mass"
                                     name="Fat Mass (kg)"
-                                    stroke="#34d399" // emerald
+                                    stroke="#10b981" // emerald
                                     strokeWidth={3}
-                                    dot={{ fill: '#34d399', strokeWidth: 0, r: 4 }}
+                                    dot={{ fill: '#10b981', strokeWidth: 0, r: 4 }}
                                 />
                             </LineChart>
                         </ResponsiveContainer>

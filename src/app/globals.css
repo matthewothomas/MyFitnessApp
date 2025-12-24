@@ -1,85 +1,47 @@
-@import "tailwindcss";
-@import "tw-animate-css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@custom-variant dark (&:is(.dark *));
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
+    --primary: 217.2 91.2% 59.8%;
+    --primary-foreground: 222.2 47.4% 11.2%;
 
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
-  --color-destructive: var(--destructive);
-  --color-destructive-foreground: var(--destructive-foreground);
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-  --color-border: var(--border);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 224.3 76.3% 48%;
 
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
-  --radius-2xl: calc(var(--radius) + 8px);
-  --radius-3xl: calc(var(--radius) + 12px);
+    --radius: 1rem;
+
+    /* Animated Gradient Background Colors */
+    --bg-gradient-from: #1e1b4b;
+    /* Deep Indigo */
+    --bg-gradient-to: #0f172a;
+    /* Slate 900 */
+  }
 }
 
-:root {
-  --radius: 1rem;
-
-  /* Animated Gradient Background Colors */
-  --bg-gradient-from: #1e1b4b;
-  /* Deep Indigo */
-  --bg-gradient-to: #0f172a;
-  /* Slate 900 */
-
-  --background: transparent;
-  --foreground: #ffffff;
-
-  /* Glassmorphism Variables */
-  --card: rgba(255, 255, 255, 0.1);
-  --card-foreground: #ffffff;
-
-  --popover: rgba(26, 26, 26, 0.9);
-  --popover-foreground: #ffffff;
-
-  --primary: #6366f1;
-  /* Indigo 500 */
-  --primary-foreground: #ffffff;
-
-  --secondary: rgba(255, 255, 255, 0.2);
-  --secondary-foreground: #ffffff;
-
-  --muted: rgba(255, 255, 255, 0.1);
-  --muted-foreground: rgba(255, 255, 255, 0.6);
-
-  --accent: rgba(255, 255, 255, 0.1);
-  --accent-foreground: #ffffff;
-
-  --destructive: #ef4444;
-  --destructive-foreground: #ffffff;
-
-  --border: rgba(255, 255, 255, 0.1);
-  --input: rgba(255, 255, 255, 0.1);
-  --ring: #6366f1;
-}
-
-/* Base Body Styles with Animated Gradient */
 @layer base {
   body {
     @apply antialiased text-foreground min-h-screen relative overflow-x-hidden;
@@ -103,14 +65,13 @@
   }
 }
 
-/* Utility classes for consistent glassmorphism */
 @layer utilities {
   .glass {
     @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl;
   }
 
   .glass-card {
-    @apply glass rounded-3xl p-6;
+    @apply bg-white/10 backdrop-blur-lg border border-white/20 shadow-xl rounded-3xl p-6;
   }
 
   .ios-input {

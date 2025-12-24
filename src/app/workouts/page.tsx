@@ -30,7 +30,7 @@ export default function WorkoutsPage() {
     const [customization, setCustomization] = useState<Record<string, { iconKey: string; iconColor: string; bgColor: string; svgString?: string }>>({});
 
     // Track completed exercises
-    const [completedExercises, setCompletedExercises] = new Set());
+    const [completedExercises, setCompletedExercises] = useState<Set<number>>(new Set());
 
     // Load initial exercises
     useEffect(() => {

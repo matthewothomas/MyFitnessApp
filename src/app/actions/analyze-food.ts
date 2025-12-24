@@ -33,11 +33,11 @@ export async function analyzeFoodAction(formData: FormData) {
             prompt: 'Analyze this food image. Estimate the nutritional content for the entire visible portion.',
             messages: [
                 {
-                    role: 'user' as const,
+                    role: 'user',
                     content: [
                         { type: 'text', text: 'Analyze this food image. Estimate the nutritional content for the entire visible portion.' },
                         { type: 'image', image: base64Image }
-                    ]
+                    ] as Array<{ type: 'text'; text: string } | { type: 'image'; image: string }>
                 }
             ]
         });

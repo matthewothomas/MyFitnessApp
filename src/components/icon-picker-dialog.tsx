@@ -14,7 +14,7 @@ import {
 } from "react-icons/md";
 
 // Icon mapping for storage
-export const ICON_MAP: Record<string, React.ComponentType<{ className?: string }>> = {
+export const ICON_MAP: Record<string, React.ComponentType<{ className?: string, style?: React.CSSProperties }>> = {
     "dumbbell": MdFitnessCenter,
     "run": MdDirectionsRun,
     "swim": MdPool,

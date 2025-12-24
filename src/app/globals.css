@@ -43,6 +43,15 @@
 }
 
 @layer base {
+
+  html,
+  body {
+    @apply h-full w-full overflow-x-hidden;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+@layer base {
   body {
     @apply antialiased text-foreground min-h-screen relative overflow-x-hidden;
     background: linear-gradient(135deg, var(--bg-gradient-from), var(--bg-gradient-to));

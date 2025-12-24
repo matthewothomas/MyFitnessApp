@@ -3,15 +3,23 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchTodayLogs, addLog, NutritionLog } from "@/lib/nutrition-engine";
-import { MdAddCircle, MdRestaurant } from "react-icons/md";
+import { analyzeFoodAction } from "@/app/actions/analyze-food";
+import { MdAddCircle, MdRestaurant, MdCameraAlt, MdRefresh } from "react-icons/md";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useRef } from "react";
 
 export default function NutritionPage() {
     const [logs, setLogs] = useState<NutritionLog[]>([]);
     const [loading, setLoading] = useState(true);
     const [userId, setUserId] = useState<string | null>(null);
+
+    // AI State
+    const [analyzing, setAnalyzing] = useState(false);
+    const fileInputRef = useRef<HTMLInputElement>(null);
+
+    // Form State
 
     // Form State
     const [name, setName] = useState("");
@@ -55,12 +63,48 @@ export default function NutritionPage() {
         }
     };
 
+    const handleAnalyze = async (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        setAnalyzing(true);
+        try {
+            const formData = new FormData();
+            formData.append('image', file);
+
+            const result = await analyzeFoodAction(formData);
+
+            if (result.data) {
+                setName(result.data.name);
+                setCalories(result.data.calories.toString());
+                setProtein(result.data.protein.toString());
+            } else if (result.error) {
+                alert(result.error);
+            }
+        } catch (err) {
+            alert("Failed to analyze image");
+        } finally {
+            setAnalyzing(false);
+            if (fileInputRef.current) fileInputRef.current.value = "";
+        }
+    };
+
     const totalCalories = logs.reduce((acc, log) => acc + log.calories, 0);
     const totalProtein = logs.reduce((acc, log) => acc + log.protein, 0);
 
     return (
         <div className="container mx-auto p-4 max-w-lg pb-24 space-y-6">
             <h1 className="text-3xl font-black text-slate-900 px-2 mt-6">Nutrition</h1>
+
+            {/* Hidden Camera Input */}
+            <input
+                type="file"
+                accept="image/*"
+                capture="environment"
+                className="hidden"
+                ref={fileInputRef}
+                onChange={handleAnalyze}
+            />
 
             {/* Summary Card */}
             <Card className="bg-slate-900 text-white border-0">
@@ -90,7 +134,19 @@ export default function NutritionPage() {
 
             {/* Quick Add Form */}
             <div className="space-y-4">
-                <h2 className="text-lg font-bold px-2">Quick Add</h2>
+                <div className="flex items-center justify-between px-2">
+                    <h2 className="text-lg font-bold">Quick Add</h2>
+                    <Button
+                        size="sm"
+                        variant="outline"
+                        className="gap-2 text-indigo-600 border-indigo-200 bg-indigo-50 hover:bg-indigo-100"
+                        onClick={() => fileInputRef.current?.click()}
+                        disabled={analyzing}
+                    >
+                        {analyzing ? <MdRefresh className="w-4 h-4 animate-spin" /> : <MdCameraAlt className="w-4 h-4" />}
+                        {analyzing ? "Analyzing..." : "Scan Meal"}
+                    </Button>
+                </div>
                 <Card className="border-slate-200 bg-white">
                     <CardContent className="p-4 space-y-4">
                         <Input

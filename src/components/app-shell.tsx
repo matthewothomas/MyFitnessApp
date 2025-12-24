@@ -1,7 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
-import { Dumbbell, PieChart, UtensilsCrossed } from "lucide-react";
+import { MdFitnessCenter, MdLocalDining, MdPieChart } from "react-icons/md";
 import { cn } from "@/lib/utils";
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
@@ -26,7 +26,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         aria-label="Workouts Tab"
                         className="flex flex-col items-center justify-center w-full h-full space-y-1 active:scale-95 transition-transform"
                     >
-                        <Dumbbell className={cn("w-7 h-7 transition-colors", activeTab === "workout" ? "text-indigo-600 fill-indigo-600" : "text-slate-400")} />
+                        <MdFitnessCenter className={cn("w-7 h-7 transition-colors", activeTab === "workout" ? "text-indigo-600 fill-indigo-600" : "text-slate-400")} />
                         <span className={cn("text-xs font-bold transition-colors", activeTab === "workout" ? "text-indigo-600" : "text-slate-400")}>Workouts</span>
                     </button>
 
@@ -35,7 +35,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         aria-label="Nutrition Tab"
                         className="flex flex-col items-center justify-center w-full h-full space-y-1 active:scale-95 transition-transform"
                     >
-                        <UtensilsCrossed className={cn("w-7 h-7 transition-colors", activeTab === "nutrition" ? "text-indigo-600 fill-indigo-600" : "text-slate-400")} />
+                        <MdLocalDining className={cn("w-7 h-7 transition-colors", activeTab === "nutrition" ? "text-indigo-600 fill-indigo-600" : "text-slate-400")} />
                         <span className={cn("text-xs font-bold transition-colors", activeTab === "nutrition" ? "text-indigo-600" : "text-slate-400")}>Nutrition</span>
                     </button>
 
@@ -44,7 +44,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
                         aria-label="Metrics Tab"
                         className="flex flex-col items-center justify-center w-full h-full space-y-1 active:scale-95 transition-transform"
                     >
-                        <PieChart className={cn("w-7 h-7 transition-colors", activeTab === "metrics" ? "text-indigo-600 fill-indigo-600" : "text-slate-400")} />
+                        <MdPieChart className={cn("w-7 h-7 transition-colors", activeTab === "metrics" ? "text-indigo-600 fill-indigo-600" : "text-slate-400")} />
                         <span className={cn("text-xs font-bold transition-colors", activeTab === "metrics" ? "text-indigo-600" : "text-slate-400")}>Metrics</span>
                     </button>
                 </div>

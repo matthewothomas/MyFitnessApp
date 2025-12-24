@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { Block, BlockTitle, List, ListInput, Button, Chip } from "konsta/react";
 import { createClient } from "@/lib/supabase/client";
 import { fetchTodayLogs, addLog, NutritionLog } from "@/lib/nutrition-engine";
-import { Plus, Scan, Apple } from "lucide-react";
+import { MdAdd, MdQrCodeScanner, MdRestaurant } from "react-icons/md";
 
 export default function NutritionPage() {
     const [logs, setLogs] = useState<NutritionLog[]>([]);
@@ -110,7 +110,7 @@ export default function NutritionPage() {
                         />
                     </div>
                     <Button rounded large className="!bg-orange-500 !text-white" onClick={handleAdd}>
-                        <Plus className="w-5 h-5 mr-1" /> Add Log
+                        <MdAdd className="w-5 h-5 mr-1" /> Add Log
                     </Button>
                 </div>
             </List>
@@ -128,7 +128,7 @@ export default function NutritionPage() {
                         <div key={log.id} className="flex items-center justify-between p-4 bg-white dark:bg-zinc-900 rounded-2xl shadow-sm">
                             <div className="flex items-center gap-3">
                                 <div className="bg-orange-100 dark:bg-orange-900/20 p-2 rounded-xl text-orange-600 dark:text-orange-400">
-                                    <Apple className="w-5 h-5" />
+                                    <MdRestaurant className="w-5 h-5" />
                                 </div>
                                 <div>
                                     <div className="font-bold">{log.name}</div>

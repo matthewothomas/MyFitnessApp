@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Skeleton } from "@/components/ui/skeleton";
-import { ArrowLeft, CheckCircle2, Dumbbell, Timer, Trash2, Plus } from "lucide-react";
+import { MdArrowBack, MdCheckCircle, MdFitnessCenter, MdTimer, MdDelete, MdAdd } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
 
@@ -98,7 +98,7 @@ export default function WorkoutsPage() {
             <div className="flex flex-col space-y-4 mb-6">
                 <div className="flex items-center justify-between">
                     <Button variant="ghost" size="icon" onClick={() => router.back()}>
-                        <ArrowLeft className="w-6 h-6" />
+                        <MdArrowBack className="w-6 h-6" />
                     </Button>
 
                     <div className="flex items-center gap-2">
@@ -123,13 +123,13 @@ export default function WorkoutsPage() {
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
                                 className={`flex flex-col items-center justify-center p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer ${workoutType === type
-                                        ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
-                                        : "border-slate-200 bg-white hover:border-indigo-200"
+                                    ? "border-indigo-600 bg-indigo-50 scale-[1.02]"
+                                    : "border-slate-200 bg-white hover:border-indigo-200"
                                     }`}
                             >
                                 <div className={`w-10 h-10 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
                                     }`}>
-                                    <Dumbbell className="w-5 h-5" />
+                                    <MdFitnessCenter className="w-5 h-5" />
                                 </div>
                                 <h3 className={`font-bold text-sm mb-1 text-center ${workoutType === type ? "text-indigo-900" : "text-slate-700"
                                     }`}>{type}</h3>
@@ -178,7 +178,7 @@ export default function WorkoutsPage() {
                                     }}
                                     className="absolute top-2 right-2 p-2 text-slate-400 hover:text-red-500"
                                 >
-                                    <Trash2 className="w-4 h-4" />
+                                    <MdDelete className="w-5 h-5 text-red-500" />
                                 </button>
                             )}
 
@@ -187,12 +187,12 @@ export default function WorkoutsPage() {
                                     <img src={exercise.image} alt={exercise.name} className="w-full h-full object-cover" />
                                 ) : (
                                     <div className="w-full h-full flex items-center justify-center bg-indigo-50 text-indigo-200">
-                                        <Dumbbell className="w-8 h-8" />
+                                        <MdFitnessCenter className="w-8 h-8" />
                                     </div>
                                 )}
                                 {completedExercises.has(index) && (
                                     <div className="absolute inset-0 bg-emerald-500/80 flex items-center justify-center">
-                                        <CheckCircle2 className="w-8 h-8 text-white" />
+                                        <MdCheckCircle className="w-8 h-8 text-white" />
                                     </div>
                                 )}
                             </div>
@@ -294,8 +294,7 @@ export default function WorkoutsPage() {
                         className="w-full border-dashed border-2 h-16 text-slate-400 hover:text-indigo-600 hover:border-indigo-600 hover:bg-indigo-50"
                         onClick={handleAddExercise}
                     >
-                        <Plus className="w-5 h-5 mr-2" />
-                        Add Exercise
+                        <MdAdd className="w-5 h-5 mr-1" /> Add Exercise
                     </Button>
                 )}
             </div>

@@ -7,12 +7,12 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Skeleton } from "@/components/ui/skeleton";
-import { Dumbbell, ArrowRight, Calendar, UtensilsCrossed } from "lucide-react";
+import { Dumbbell } from "lucide-react";
+import { MdCalendarToday, MdArrowForward, MdLocalDining } from "react-icons/md";
 import { useRouter } from "next/navigation";
 
-export default function WorkoutDashboard() {
+export default function WorkoutDashboard({ userName = "User" }: { userName?: string }) {
     const [nextWorkout, setNextWorkout] = useState<WorkoutType>("Push 1");
-    const [userName, setUserName] = useState<string>("Guest");
     const [loading, setLoading] = useState(true);
     const router = useRouter();
 
@@ -92,7 +92,7 @@ export default function WorkoutDashboard() {
                 <CardContent className="p-6 relative z-10">
                     <div className="flex justify-between items-start mb-4">
                         <div className="bg-white/20 p-2 rounded-lg backdrop-blur-sm">
-                            <Calendar className="w-5 h-5 text-white" />
+                            <MdCalendarToday className="w-5 h-5 text-white" />
                         </div>
                     </div>
 
@@ -105,7 +105,7 @@ export default function WorkoutDashboard() {
                         className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-14 text-xl rounded-2xl active:scale-95 transition-transform"
                         onClick={() => router.push('/workouts')}
                     >
-                        Start Workout <ArrowRight className="ml-2 w-6 h-6" />
+                        Start Workout <MdArrowForward className="ml-2 w-6 h-6" />
                     </Button>
                 </CardContent>
             </Card>
@@ -115,7 +115,7 @@ export default function WorkoutDashboard() {
                 <CardHeader className="p-4 pb-2">
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center">
-                            <UtensilsCrossed className="w-4 h-4 text-orange-500" />
+                            <MdLocalDining className="w-4 h-4 text-orange-500" />
                         </div>
                         <CardTitle className="text-sm font-medium text-slate-500 uppercase tracking-wide">Nutrition</CardTitle>
                     </div>

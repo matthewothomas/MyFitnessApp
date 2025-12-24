@@ -85,7 +85,7 @@ export default function WorkoutDashboard() {
             </div>
 
             {/* Main Action Card */}
-            <Card className="border-0 shadow-xl shadow-indigo-100 bg-gradient-to-br from-indigo-600 to-violet-600 text-white overflow-hidden relative">
+            <Card className="border-0 bg-gradient-to-br from-indigo-600 to-violet-600 text-white overflow-hidden relative">
                 <div className="absolute top-0 right-0 -mt-10 -mr-10 w-40 h-40 bg-white/10 rounded-full blur-3xl"></div>
                 <div className="absolute bottom-0 left-0 -ml-10 -mb-10 w-40 h-40 bg-black/10 rounded-full blur-3xl"></div>
 
@@ -102,7 +102,7 @@ export default function WorkoutDashboard() {
                     </div>
 
                     <Button
-                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-14 text-xl rounded-2xl shadow-lg active:scale-95 transition-transform"
+                        className="w-full bg-white text-indigo-600 hover:bg-white/90 font-bold h-14 text-xl rounded-2xl active:scale-95 transition-transform"
                         onClick={() => router.push('/workouts')}
                     >
                         Start Workout <ArrowRight className="ml-2 w-6 h-6" />
@@ -111,7 +111,7 @@ export default function WorkoutDashboard() {
             </Card>
 
             {/* Nutrition Summary */}
-            <Card className="border-slate-100 shadow-sm bg-white/50 backdrop-blur-md" onClick={() => router.push('/nutrition')}>
+            <Card className="border-slate-100 bg-white/50 backdrop-blur-md" onClick={() => router.push('/nutrition')}>
                 <CardHeader className="p-4 pb-2">
                     <div className="flex items-center gap-2">
                         <div className="w-8 h-8 rounded-full bg-orange-50 flex items-center justify-center">

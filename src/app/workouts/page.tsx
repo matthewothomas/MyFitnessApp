@@ -123,8 +123,8 @@ export default function WorkoutsPage() {
                                 key={type}
                                 onClick={() => handleWorkoutChange(type)}
                                 className={`flex-shrink-0 w-32 p-4 rounded-xl border-2 transition-all duration-200 cursor-pointer snap-start ${workoutType === type
-                                        ? "border-indigo-600 bg-indigo-50 shadow-md scale-105"
-                                        : "border-slate-200 bg-white hover:border-indigo-200"
+                                    ? "border-indigo-600 bg-indigo-50 scale-105"
+                                    : "border-slate-200 bg-white hover:border-indigo-200"
                                     }`}
                             >
                                 <div className={`w-8 h-8 rounded-full flex items-center justify-center mb-3 ${workoutType === type ? "bg-indigo-100 text-indigo-600" : "bg-slate-100 text-slate-400"
@@ -164,7 +164,7 @@ export default function WorkoutsPage() {
                         }}
                         className={`transition-all duration-300 ${completedExercises.has(index)
                             ? "bg-emerald-50/50 opacity-70"
-                            : "bg-white shadow-md hover:shadow-lg"
+                            : "bg-white border border-slate-100" // Added border for slight definition since shadow is gone
                             }`}
                         onClick={() => toggleExercise(index)}
                     >
